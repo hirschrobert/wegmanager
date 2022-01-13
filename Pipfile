@@ -1,0 +1,19 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+sqlalchemy = "1.4.29"
+fints = "3.0.1"
+Pillow = "9.0.0"
+arrow = "1.2.1"
+
+[dev-packages]
+pylint = "*"
+sphinx = "*"
+sphinx-intl = "*"
+sphinx-rtd-theme = "*"
+
+[requires]
+python_version = "3.8"

@@ -1,0 +1,43 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2022, Robert Hirsch
+# This file is distributed under the same license as the wegmanager package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: wegmanager \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-01-13 22:52+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../source/index.rst:9
+msgid "Contents:"
+msgstr "Inhaltsverzeichnis"
+
+#: ../../source/index.rst:7
+msgid "Welcome to WEG Manager's documentation!"
+msgstr "Willkommen zum Benutzerhandbuch von WEG Manager!"
+
+#: ../../source/index.rst:16
+msgid "Indices and tables"
+msgstr "weitere Inhalte"
+
+#: ../../source/index.rst:18
+msgid ":ref:`genindex`"
+msgstr ""
+
+#: ../../source/index.rst:19
+msgid ":ref:`search`"
+msgstr ""
+
+#: ../../source/index.rst:20
+msgid "`Developer Documentation <../developer/index.html>`_"
+msgstr ""
+

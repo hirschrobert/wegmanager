@@ -1,0 +1,156 @@
+# German translations for PACKAGE package
+# German translation for PACKAGE.
+# Copyright (C) 2022 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# robert <dev@robert-hirsch.de>, 2022.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-01-13 12:03+0100\n"
+"PO-Revision-Date: 2022-01-13 12:05+0100\n"
+"Last-Translator: robert <dev@robert-hirsch.de>\n"
+"Language-Team: German\n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: controller/Application.py:28
+msgid "Bank Transactions"
+msgstr ""
+
+#: controller/AccountsController.py:106
+#, python-brace-format
+msgid "{key}: must be eight digits"
+msgstr ""
+
+#: controller/FinTS.py:72
+msgid "TAN Input"
+msgstr ""
+
+#: controller/FinTS.py:72
+msgid "A TAN is required:"
+msgstr ""
+
+#: controller/FinTS.py:86
+msgid "photo TAN"
+msgstr ""
+
+#: controller/FinTS.py:92
+msgid "TAN"
+msgstr ""
+
+#: controller/FinTS.py:104
+msgid "Close"
+msgstr ""
+
+#: model/BankUser.py:16 view/Accounts.py:79
+msgid "IBAN"
+msgstr ""
+
+#: model/BankUser.py:17 view/Accounts.py:86
+msgid "Username"
+msgstr ""
+
+#: model/Transaction.py:26
+msgid "Own IBAN"
+msgstr ""
+
+#: model/Transaction.py:27
+msgid "Date"
+msgstr ""
+
+#: model/Transaction.py:28
+msgid "Partner Name"
+msgstr ""
+
+#: model/Transaction.py:29
+msgid "Partner IBAN"
+msgstr ""
+
+#: model/Transaction.py:30
+msgid "Partner BIC"
+msgstr ""
+
+#: model/Transaction.py:31
+msgid "Partner ID"
+msgstr ""
+
+#: model/Transaction.py:32
+msgid "Purpose"
+msgstr ""
+
+#: model/Transaction.py:33
+msgid "Amount"
+msgstr ""
+
+#: model/Transaction.py:34
+msgid "Currency"
+msgstr ""
+
+#: model/Transaction.py:35
+msgid "Customer Reference"
+msgstr ""
+
+#: model/Transaction.py:36
+msgid "End to End Reference"
+msgstr ""
+
+#: view/Accounts.py:11
+msgid "Bank Accounts"
+msgstr ""
+
+#: view/Accounts.py:48
+msgid "request bank posting"
+msgstr ""
+
+#: view/Accounts.py:53
+msgid "add bank account"
+msgstr ""
+
+#: view/Accounts.py:60 view/Transactions.py:97
+msgid "change"
+msgstr ""
+
+#: view/Accounts.py:62 view/Transactions.py:99
+msgid "delete"
+msgstr ""
+
+#: view/Accounts.py:74 view/Accounts.py:115
+msgid "Add Bank Account"
+msgstr ""
+
+#: view/Accounts.py:93
+msgid "Pin"
+msgstr ""
+
+#: view/Accounts.py:100
+msgid "German Bank Code"
+msgstr ""
+
+#: view/Accounts.py:107
+msgid "FinTS Bank URL"
+msgstr ""
+
+#: view/Accounts.py:120
+msgid "Cancel"
+msgstr ""
+
+#: view/Accounts.py:131 view/Transactions.py:70 view/Transactions.py:75
+msgid "Add Invoice"
+msgstr ""
+
+#: view/Transactions.py:54
+msgid "Search"
+msgstr ""
+
+#: view/Transactions.py:61
+msgid "get new bank transactions"
+msgstr ""
+
+#: view/Transactions.py:65
+msgid "export"
+msgstr ""

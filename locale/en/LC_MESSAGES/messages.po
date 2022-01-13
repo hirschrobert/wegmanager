@@ -1,0 +1,155 @@
+# English translations for PACKAGE package.
+# Copyright (C) 2022 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# robert <dev@robert-hirsch.de>, 2022.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-01-13 12:03+0100\n"
+"PO-Revision-Date: 2022-01-13 12:10+0100\n"
+"Last-Translator: robert <dev@robert-hirsch.de>\n"
+"Language-Team: English\n"
+"Language: en_US\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: controller/Application.py:28
+msgid "Bank Transactions"
+msgstr "Bank Transactions"
+
+#: controller/AccountsController.py:106
+#, python-brace-format
+msgid "{key}: must be eight digits"
+msgstr "{key}: must be eight digits"
+
+#: controller/FinTS.py:72
+msgid "TAN Input"
+msgstr "TAN Input"
+
+#: controller/FinTS.py:72
+msgid "A TAN is required:"
+msgstr "A TAN is required:"
+
+#: controller/FinTS.py:86
+msgid "photo TAN"
+msgstr "photo TAN"
+
+#: controller/FinTS.py:92
+msgid "TAN"
+msgstr "TAN"
+
+#: controller/FinTS.py:104
+msgid "Close"
+msgstr "Close"
+
+#: model/BankUser.py:16 view/Accounts.py:79
+msgid "IBAN"
+msgstr "IBAN"
+
+#: model/BankUser.py:17 view/Accounts.py:86
+msgid "Username"
+msgstr "Username"
+
+#: model/Transaction.py:26
+msgid "Own IBAN"
+msgstr "Own IBAN"
+
+#: model/Transaction.py:27
+msgid "Date"
+msgstr "Date"
+
+#: model/Transaction.py:28
+msgid "Partner Name"
+msgstr "Partner Name"
+
+#: model/Transaction.py:29
+msgid "Partner IBAN"
+msgstr "Partner IBAN"
+
+#: model/Transaction.py:30
+msgid "Partner BIC"
+msgstr "Partner BIC"
+
+#: model/Transaction.py:31
+msgid "Partner ID"
+msgstr "Partner ID"
+
+#: model/Transaction.py:32
+msgid "Purpose"
+msgstr "Purpose"
+
+#: model/Transaction.py:33
+msgid "Amount"
+msgstr "Amount"
+
+#: model/Transaction.py:34
+msgid "Currency"
+msgstr "Currency"
+
+#: model/Transaction.py:35
+msgid "Customer Reference"
+msgstr "Customer Reference"
+
+#: model/Transaction.py:36
+msgid "End to End Reference"
+msgstr "End to End Reference"
+
+#: view/Accounts.py:11
+msgid "Bank Accounts"
+msgstr "Bank Accounts"
+
+#: view/Accounts.py:48
+msgid "request bank posting"
+msgstr "request bank posting"
+
+#: view/Accounts.py:53
+msgid "add bank account"
+msgstr "add bank account"
+
+#: view/Accounts.py:60 view/Transactions.py:97
+msgid "change"
+msgstr "change"
+
+#: view/Accounts.py:62 view/Transactions.py:99
+msgid "delete"
+msgstr "delete"
+
+#: view/Accounts.py:74 view/Accounts.py:115
+msgid "Add Bank Account"
+msgstr "Add Bank Account"
+
+#: view/Accounts.py:93
+msgid "Pin"
+msgstr "Pin"
+
+#: view/Accounts.py:100
+msgid "German Bank Code"
+msgstr "German Bank Code"
+
+#: view/Accounts.py:107
+msgid "FinTS Bank URL"
+msgstr "FinTS Bank URL"
+
+#: view/Accounts.py:120
+msgid "Cancel"
+msgstr "Cancel"
+
+#: view/Accounts.py:131 view/Transactions.py:70 view/Transactions.py:75
+msgid "Add Invoice"
+msgstr "Add Invoice"
+
+#: view/Transactions.py:54
+msgid "Search"
+msgstr "Search"
+
+#: view/Transactions.py:61
+msgid "get new bank transactions"
+msgstr "get new bank transactions"
+
+#: view/Transactions.py:65
+msgid "export"
+msgstr "export"
