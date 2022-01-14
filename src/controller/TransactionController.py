@@ -28,7 +28,7 @@ class TransactionController(AbstractController):
         print(content)
         data = content
 
-        filename = 'bank_transactions.csv'
+        filename = '../data/tmp/bank_transactions.csv'
         with open(filename, 'w', newline='', encoding='utf-8') as f:
             writer = csv.writer(f)
             try:
