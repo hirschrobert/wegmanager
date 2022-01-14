@@ -14,6 +14,7 @@ pylint = "*"
 sphinx = "*"
 sphinx-intl = "*"
 sphinx-rtd-theme = "*"
+pyinstaller = "*"
 
 [requires]
 python_version = "3.8"
