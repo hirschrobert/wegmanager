@@ -5,6 +5,8 @@ VERSION = '0.0.dev1'
 install_requires = [
     'sqlalchemy == 1.4.29',
     'fints == 3.0.1',
+    'Pillow == 9.0.0',
+    'arrow == 1.2.1',
 ]
 
 docs_extras = [
