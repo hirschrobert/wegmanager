@@ -55,6 +55,6 @@ html_theme = 'sphinx_rtd_theme'
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
 
-intersphinx_mapping = {
-  'developer': ('../../../developer/build/html/', '../../developer/build/html/objects.inv'),
-}
+dev = os.environ.get('developer')
+if not dev:
+	exclude_patterns += ['dev']
