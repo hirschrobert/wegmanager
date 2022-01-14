@@ -3,20 +3,17 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Developer documentation for WEG Manager!
-========================================
+WEG Manager developer documentation!
+=======================================
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
    :caption: Contents:
-
-   readme
-   changelog
+   
    modules
 
 Indices and tables
-------------------
+==================
 
 * :ref:`genindex`
-* :ref:`modindex`
 * :ref:`search`

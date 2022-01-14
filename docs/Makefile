@@ -1,13 +1,20 @@
-user-html:
-	rm -rf build/html/user
-	cd user && make html
-	sphinx-build -b html -D language=de user/source/ user/build/html/de/
-	@echo "User manual en and de build finished; HTML is updated"
+# Minimal makefile for Sphinx documentation
+#
 
-developer-html:
-	rm -rf build/html/developer
-	cd developer && make html
-	@echo "Developer manual build finished; HTML is updated"
+# You can set these variables from the command line, and also
+# from the environment for the first two.
+SPHINXOPTS    ?=
+SPHINXBUILD   ?= sphinx-build
+SOURCEDIR     = source
+BUILDDIR      = build
 
-clean:
-	rm -r developer/build/html user/build/html
+# Put it first so that "make" without argument is like "make help".
+help:
+	@$(SPHINXBUILD) -M help "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
+
+.PHONY: help Makefile
+
+# Catch-all target: route all unknown targets to Sphinx using the new
+# "make mode" option.  $(O) is meant as a shortcut for $(SPHINXOPTS).
+%: Makefile
+	@$(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
