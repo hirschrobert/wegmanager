@@ -56,5 +56,5 @@ html_theme = 'sphinx_rtd_theme'
 html_static_path = ['_static']
 
 dev = os.environ.get('developer')
-if not dev:
+if dev == 'False':
 	exclude_patterns += ['dev']

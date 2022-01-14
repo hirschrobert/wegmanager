@@ -10,7 +10,8 @@ Welcome to WEG Manager's documentation!
    :maxdepth: 1
    :caption: Contents:
 
-   quickstart   
+   quickstart
+   dev/index
 
 Indices and tables
 ==================
