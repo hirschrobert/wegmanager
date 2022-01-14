@@ -21,6 +21,8 @@ class Transactions(AbstractTab):
         headers, content = data
         if content[0]:
             tableheaders = list(content[0].keys())
+        else:
+            tableheaders = list(headers.keys())
         self.table = ttk.Treeview(
             self, show="headings", columns=tableheaders)
         self.table.grid(column=0, row=1, columnspan=4,
@@ -39,6 +41,7 @@ class Transactions(AbstractTab):
         self.table["displaycolumns"] = displaycolumns
 
         for key, value in headers.items():
+            print(key + " => " + value)
             self.table.heading(key, text=value)
         if not content[0]:
             self.disablePopup(self.popup)

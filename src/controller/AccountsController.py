@@ -34,12 +34,12 @@ class AccountsController():
         client = FinTS(account.blz, ac[2], pin, ac[4])
 
         client.select_account(account.iban)
+        # probably the most reliable way to get all transactions in several
+        # requests. From today back max days (usually 90 days). Transactions
+        # already requested are identified by hash and ignored.
         days = 90
         raw = client.get_transactions(days)
         postings = client.transform_transactions(raw)
-        #print(json.dumps(postings, indent=4, sort_keys=True, default=str))
-        #transactions = json.dumps(postings, indent=4, sort_keys=True, default=str)
-        # return transactions
         return postings
 
     def writetodb(self, data):

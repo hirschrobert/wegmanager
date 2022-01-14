@@ -127,10 +127,11 @@ class FinTS:
         :param int days: retreive transactions of last n days 
         """
         return self.f.get_transactions(
-            self.selected_account, start_date=arrow.now().shift(days=-1*days).datetime,
+            self.selected_account, start_date=arrow.now().shift(days=-1 * days).datetime,
             end_date=arrow.now().datetime
         )
 
+    # TODO: actually belongs to model.Transaction
     def transform_transactions(
         self, transactions: List[FTT],
     ) -> List[Dict[str, str]]:
@@ -170,39 +171,31 @@ class FinTS:
             #            payee = payee[: -len(PAYPAL_SUFFIX)]
             #        data["applicant_name"] = "PAYPAL " + payee
 
-            orig = {}
-            for k, v in data.items():
-                orig[k] = v
-
-            orig["amount"] = str(float_amount)
-            orig['date'] = orig['date'].isoformat()
             t = {}
-            t['json_original'] = orig
+            t['json_original'] = data
+            t['json_original']['amount'] = str(float_amount)
+            t['json_original']['date'] = t['json_original']['date'].isoformat()
 
             t['account_iban'] = self.selected_account.iban
             t['date_retreived'] = datetime.now().replace(microsecond=0)
 
-            t['date'] = data['date']
+            t['date'] = datetime.strptime(t['json_original']['date'], '%Y-%m-%d').date()
             t['applicant_name'] = data['applicant_name']
             t['applicant_iban'] = data['applicant_iban']
             t['applicant_bin'] = data['applicant_bin']
-            if 'applicant_creditor_id' in data:
-                t['applicant_creditor_id'] = data['applicant_creditor_id']
+            t['applicant_creditor_id'] = data.get('applicant_creditor_id', '')
             t['purpose'] = data['purpose']
             t['amount'] = float_amount
             t['currency'] = data['currency']
             t['customer_reference'] = data['customer_reference']
-            if 'end_to_end_reference' in data:
-                t['end_to_end_reference'] = data['end_to_end_reference']
+            t['end_to_end_reference'] = data.get('end_to_end_reference', '')
 
-            print(t["amount"])
-            print(t["date"])
-            print(t['json_original']["transaction_code"])
-            hash_str = datetime.now().isoformat()
-            # protection against empty date fields
-            # hash_str = str(t["date"]) + str(t["amount"]) + t['json_original']["transaction_code"] + \
-            # t["applicant_bin"] + t["applicant_iban"] + \
-            #t["applicant_name"] + t["purpose"] + t['json_original']["id"]
+            try:
+                hash_str = t['json_original']['date'] + str(t["amount"]) + str(t['json_original'].get('transaction_code', '')) + t["purpose"] + t['json_original']["id"] + str(
+                    t["applicant_bin"] or '') + str(t["applicant_iban"] or '') + str(t["applicant_name"] or '') + t["purpose"] + t['json_original']["id"]
+            except TypeError as err:
+                print(err)
+                raise
             hashvalue = hashlib.sha256(hash_str.encode('UTF-8')).hexdigest()
             t["hash"] = hashvalue
 

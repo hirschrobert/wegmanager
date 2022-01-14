@@ -42,7 +42,6 @@ class Accounts:
             self.disablePopup(self.popup)
         else:
             for row in content:
-                #result = [row[key] for key in headers.keys()]
                 self.table.insert("", tk.END, values=list(row.values()))
 
         self.table.grid(row=0, columnspan=2)
