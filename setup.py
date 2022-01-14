@@ -2,6 +2,11 @@ from setuptools import setup
 
 VERSION = '0.0.dev1'
 
+install_requires = [
+    'sqlalchemy == 1.4.29',
+    'fints == 3.0.1',
+]
+
 docs_extras = [
     'Sphinx >= 4.3.2',  # Force RTD to use >= 4.3.2
     'docutils >=0.17.1',
@@ -22,5 +27,6 @@ setup(
     license="GPL-3.0-only",
     package_dir={'': 'src'},
     python_requires='>=3.8',
+    install_requires=install_requires,
     extras_require={'docs': docs_extras},
 )
