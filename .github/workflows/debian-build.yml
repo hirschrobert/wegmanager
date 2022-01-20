@@ -29,7 +29,6 @@ jobs:
         ls ${{ github.workspace }}
         sudo add-apt-repository ppa:jyrki-pulliainen/dh-virtualenv
         sudo apt-get install -y devscripts dh-virtualenv debhelper python3-virtualenv
-        ls -R .
-        #ls -la ./debian/wegmanager/opt/wegmanager/lib/python3.8/site-packages/Pillow.libs/
-        #debuild -b -us -uc
+        sudo apt-get install -y libtiff5-dev libjpeg8-dev libopenjp2-7-dev zlib1g-dev libfreetype6-dev liblcms2-dev libwebp-dev tcl8.6-dev tk8.6-dev python3-tk libharfbuzz-dev libfribidi-dev libxcb1-dev
+        debuild -b -us -uc
     - run: echo "🍏 This job's status is ${{ job.status }}."
