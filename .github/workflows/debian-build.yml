@@ -27,6 +27,7 @@ jobs:
     - name: List files in the repository
       run: |
         ls ${{ github.workspace }}
+        sudo add-apt-repository ppa:jyrki-pulliainen/dh-virtualenv
         sudo apt-get install -y devscripts dh-virtualenv debhelper
         debuild -b -us -uc
     - run: echo "🍏 This job's status is ${{ job.status }}."
