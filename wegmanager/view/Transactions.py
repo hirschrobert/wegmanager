@@ -1,8 +1,8 @@
 from tkinter import ttk
 import tkinter as tk
-from view.AbstractTab import AbstractTab
+from wegmanager.view.AbstractTab import AbstractTab
 from typing import List
-from view.Form import Form
+from wegmanager.view.Form import Form
 
 
 class Transactions(AbstractTab):
@@ -41,7 +41,6 @@ class Transactions(AbstractTab):
         self.table["displaycolumns"] = displaycolumns
 
         for key, value in headers.items():
-            print(key + " => " + value)
             self.table.heading(key, text=value)
         if not content[0]:
             self.disablePopup(self.popup)

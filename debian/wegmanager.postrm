@@ -1,0 +1,27 @@
+#!/bin/sh
+
+case "$1" in
+	remove)
+	
+		echo >&2 ""
+		echo >&2 "-------------------------------------------"
+
+		# delete desktop file
+		rm -f /usr/share/applications/wegmanager.desktop
+		update-desktop-database
+		
+		echo >&2 "desktop icon removed."
+		
+		# delete group accounting
+		echo >&2 "delete group 'accounting' for $SUDO_USER..."
+		delgroup --only-if-empty accounting || true
+		echo >&2 "Could not delete group 'accounting'. The following users are still members. Use 'delgroup accounting' if you really want to delete that group."
+		groupmems -g accounting -l >&2 || true
+		
+		echo >&2 "remove steps completed."
+		echo >&2 "database has NOT been removed! Usually located at '/var/opt/wegmanager/database/db.sqlite'."
+		echo >&2 "-------------------------------------------"
+		echo >&2 ""
+		
+		;;
+esac

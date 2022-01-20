@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from view.AbstractTab import AbstractTab
+from wegmanager.view.AbstractTab import AbstractTab
 
 
 class AbstractController(ABC):

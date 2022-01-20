@@ -1,18 +1,21 @@
-from .AbstractController import AbstractController
-from view.Transactions import Transactions
-from view.Accounts import Accounts
-from model.Transaction import Transaction as TransactionModel
-from controller.AccountsController import AccountsController
+from wegmanager.controller.AbstractController import AbstractController
+from wegmanager.view.Transactions import Transactions
+from wegmanager.view.Accounts import Accounts
+from wegmanager.model.Transaction import Transaction as TransactionModel
+from wegmanager.controller.AccountsController import AccountsController
 import os
 import csv
 import sys
+import tempfile
+import time
 
 
 class TransactionController(AbstractController):
-    def __init__(self) -> None:
+    def __init__(self, db_session) -> None:
         super().__init__()
         self.view = None
         self.model = TransactionModel()
+        self.db_session = db_session
 
     def bind(self, view: Transactions):
         self.view = view  # notebook
@@ -25,11 +28,15 @@ class TransactionController(AbstractController):
     def export(self):
         headers, content = self.getTableData()
 
-        print(content)
         data = content
 
-        filename = 'bank_transactions.csv'
-        with open(filename, 'w', newline='', encoding='utf-8') as f:
+        home_folder = os.getenv('HOME')
+        filename = os.path.join(home_folder, '.config',
+                                'wegmanager', 'tmp_bank_transactions.csv')
+        fd, path = tempfile.mkstemp('.csv', 'bank_transactions_')
+
+        with open(path, 'w', newline='', encoding='utf-8') as f:
+            # with tempfile.TemporaryFile() as f:
             writer = csv.writer(f)
             try:
                 count = 0
@@ -43,17 +50,17 @@ class TransactionController(AbstractController):
 
                     # Writing data of CSV file
                     writer.writerow(row.values())
+                f.seek(0)
             except csv.Error as e:
                 sys.exit('file {}, line {}: {}'.format(
-                    filename, writer.line_num, e))
-                f.close
-
-        f.close()
-        #os.startfile('data_file.csv', 'open')
-        os.system('/usr/bin/xdg-open ' + filename)
+                    path, writer.line_num, e))
+        os.close(fd)
+        os.system('/usr/bin/xdg-open ' + path)
+        time.sleep(3)
+        os.unlink(path)
 
     def getAccounts(self):
-        c = AccountsController()
+        c = AccountsController(self.db_session)
         v = Accounts(self.view)
         c.bind(v)
 
@@ -61,9 +68,7 @@ class TransactionController(AbstractController):
         data = self.getTableData()
         self.view.createTableView(data)
 
-    def update(self):
-        self.view.createAddView()
 
     def getTableData(self):
-        headers, results = self.model.getModeledData()
+        headers, results = self.model.getModeledData(self.db_session)
         return headers, results

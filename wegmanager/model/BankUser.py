@@ -1,4 +1,4 @@
-from controller.DbController import Base, get_db
+from wegmanager.controller.DbController import Base, get_db
 from sqlalchemy import Column, String, Integer
 from sqlalchemy.inspection import inspect
 
@@ -18,20 +18,20 @@ class BankUser(Base):
                    }
         return headers
 
-    def getModeledData(self):
-        results = self.modelData()
+    def getModeledData(self, db_session):
+        results = self.modelData(db_session)
         headers = self.headers()
         return headers, results
 
-    def setData(self, data):
-        db = get_db()
+    def setData(self, db_session, data):
+        db = get_db(db_session)
         db.add(data)
         db.commit()
 
     # TODO
-    def modelData(self):
+    def modelData(self, db_session):
         results = []
-        db = get_db()
+        db = get_db(db_session)
         data = db.query(BankUser).all()
         # if table is empty
         if not data:

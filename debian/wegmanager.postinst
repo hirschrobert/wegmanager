@@ -1,0 +1,63 @@
+#!/bin/sh
+
+case "$1" in
+	configure)
+	
+		echo >&2 ""
+		echo >&2 "-------------------------------------------"
+		echo >&2 "create group 'accounting' for $SUDO_USER..."
+
+		# desktop file
+		desktop-file-install --dir=${XDG_DATA_DIRS:-/usr/share}/applications /opt/wegmanager/share/applications/wegmanager.desktop
+		update-desktop-database
+
+		# If the package has default file it could be sourced, so that
+		# the local admin can overwrite the defaults
+
+		[ -f "/etc/default/wegmanager" ] && . /etc/default/wegmanager
+
+		# Sane defaults:
+		[ -z "$INSTALL_LOC" ] && INSTALL_LOC=/var/opt/wegmanager
+		[ -z "$DB_LOC" ] && DB_LOC=/var/opt/wegmanager/database
+		[ -z "$ACCOUNTING_GROUP" ] && ACCOUNTING_GROUP=accounting
+
+		# create group to restrict access to database
+		# 1. create group if not existing
+		if ! getent group | grep -q "^$ACCOUNTING_GROUP:" ; then
+			echo -n "Adding group $ACCOUNTING_GROUP..."
+			addgroup --quiet --system $ACCOUNTING_GROUP 2>/dev/null ||true
+			echo "...done"
+		else
+			echo >&2 "group 'accounting' already exists."
+		fi
+
+		# 2. adjust file and directory permissions
+		# TODO: maybe better to use dpkg-statoverride in debian/rules or debian/install file?
+		if ! dpkg-statoverride --list $DB_LOC >/dev/null
+		then
+			mkdir -p $DB_LOC
+			chown -R :$ACCOUNTING_GROUP $INSTALL_LOC
+			chmod -R u=rwxs,g=rwxs,o= $INSTALL_LOC
+			touch $DB_LOC/db.sqlite
+			chmod u=rw,g=rw,o= $DB_LOC/db.sqlite
+			chown :$ACCOUNTING_GROUP /opt/wegmanager/start.sh
+			echo >&2 "creating database folder and changing permissions. Done!"
+		fi
+		
+		# 3. Add the executing sudo user to the ACCOUNTING_GROUP group.
+		# TODO: could be a problem sometimes if install not executed by sudo in terminal
+		if test -n $ADDGROUP
+		then
+			if ! groups $SUDO_USER | cut -d: -f2 | grep -qw $ADDGROUP >/dev/null 2>&1;
+			then
+				adduser $SUDO_USER $ACCOUNTING_GROUP
+				echo >&2 "$SUDO_USER added to group '$ACCOUNTING_GROUP'."
+			fi
+		fi
+		
+		echo >&2 "configuration steps completed."
+		echo >&2 "-------------------------------------------"
+		echo >&2 ""
+
+		;;
+esac

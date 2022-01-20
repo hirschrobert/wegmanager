@@ -5,6 +5,16 @@ data/db.sqlite
 data/config.ini
 data/tmp/*
 tests/*
+locale-dev
+requirements.in
+
+# Eclipse
+.settings
+
+# Build stuff
+*.debhelper
+debian/wegmanager
+debian/debhelper-build-stamp
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

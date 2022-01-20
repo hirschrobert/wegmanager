@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=WEG Manager
+Icon=/opt/wegmanager/lib/python3.8/site-packages/wegmanager/icon.png
+Type=Application
+Categories=Office;Application
+Exec=/opt/wegmanager/start.sh
+Version=1.0
+Comment=WEG Manager, accounting for housing.
+Terminal=false
