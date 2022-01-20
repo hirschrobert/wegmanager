@@ -15,6 +15,9 @@ sphinx = "*"
 sphinx-intl = "*"
 sphinx-rtd-theme = "*"
 pyinstaller = "*"
+stdeb = "*"
+pip-tools = "*"
+virtualenv = "*"
 
 [requires]
 python_version = "3.8"

@@ -22,8 +22,8 @@ class AccountNotFoundException(Exception):
 
     accounts: List[SEPAAccount] = []
 
-    def __init__(self, accounts: List[SEPAAccount]):
-        Exception.__init__()
+    def __init__(self, accounts: List[SEPAAccount]) -> None:
+        super().__init__()
         self.accounts = accounts
 
 
@@ -36,7 +36,8 @@ class FinTS:
     f: FinTS3PinTanClient
     selected_account: SEPAAccount
 
-    def __init__(self, blz: int, username: str, pin: str, finurl: str, fints_product_id: Optional[str] = None):
+    def __init__(self, blz: int, username: str, pin: str, finurl: str,
+                 fints_product_id: Optional[str] = None):
         self.f = FinTS3PinTanClient(
             blz,  # Your bank's BLZ
             username,  # Your login name
@@ -61,7 +62,7 @@ class FinTS:
                 img = Image.open(bytes_io)
                 img.save("../data/phototan.png")
 
-                #img = ImageTk.PhotoImage(Image.open(bytes_io))
+                img = ImageTk.PhotoImage(Image.open(bytes_io))
                 self.open_tan_view(img)
                 #root2 = Tk()
                 #img = ImageTk.PhotoImage(Image.open(bytes_io))
@@ -179,7 +180,8 @@ class FinTS:
             t['account_iban'] = self.selected_account.iban
             t['date_retreived'] = datetime.now().replace(microsecond=0)
 
-            t['date'] = datetime.strptime(t['json_original']['date'], '%Y-%m-%d').date()
+            t['date'] = datetime.strptime(
+                t['json_original']['date'], '%Y-%m-%d').date()
             t['applicant_name'] = data['applicant_name']
             t['applicant_iban'] = data['applicant_iban']
             t['applicant_bin'] = data['applicant_bin']
@@ -191,8 +193,12 @@ class FinTS:
             t['end_to_end_reference'] = data.get('end_to_end_reference', '')
 
             try:
-                hash_str = t['json_original']['date'] + str(t["amount"]) + str(t['json_original'].get('transaction_code', '')) + t["purpose"] + t['json_original']["id"] + str(
-                    t["applicant_bin"] or '') + str(t["applicant_iban"] or '') + str(t["applicant_name"] or '') + t["purpose"] + t['json_original']["id"]
+                hash_str = t['json_original']['date'] + str(t["amount"]) 
+                hash_str += str(t['json_original'].get('transaction_code', ''))
+                hash_str += t["purpose"] + t['json_original']["id"]
+                hash_str += str(t["applicant_bin"] or '') + str(t["applicant_iban"] or '') 
+                hash_str += str(t["applicant_name"] or '') + t["purpose"] + t['json_original']["id"]
+                hash_str += str(t['end_to_end_reference'] or '')
             except TypeError as err:
                 print(err)
                 raise

@@ -1,0 +1,9 @@
+Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: WEG Manager
+Upstream-Contact: Robert Hirsch <dev@robert-hirsch.de>
+Source: https://github.com/hirschrobert/wegmanager
+
+Files: *
+Copyright: 2022, Robert Hirsch <dev@robert-hirsch.de>
+License: GPL-3
+ https://www.gnu.org/licenses/lgpl-3.0.txt

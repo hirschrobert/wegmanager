@@ -1,24 +1,23 @@
-from controller.FinTS import FinTS
+from wegmanager.controller.FinTS import FinTS
 from tkinter import simpledialog, messagebox
-from model.BankUser import BankUser
-from model.Transaction import Transaction
+from wegmanager.model.BankUser import BankUser
+from wegmanager.model.Transaction import Transaction
 from fints.models import SEPAAccount
 
 
 class AccountsController():
-    def __init__(self) -> None:
-
+    def __init__(self, db_session) -> None:
+        self.view = None
         self.model = BankUser()
         self.entries_values = {}
-        self.view = None
+        self.db_session = db_session
 
     def bind(self, view):
         self.view = view
-        data = self.getAccountsData()
+        data = self.getAccountsData(self.db_session)
         self.view.createTableView(data)  # headers, content = data
         self.view.getPostingsButton.configure(command=self.getTransactions)
-        self.view.addAccountButton.configure(command=self.addAccount)
-        # self.view.destroyAddView(data)
+        self.view.addAccountButton.configure(command=self.w2controller)
 
     def getTransactions(self):
         self.writetodb(self.retreiveTransactions())
@@ -47,34 +46,33 @@ class AccountsController():
             try:
                 transaction_model = Transaction()
                 to_store = Transaction(**t)
-                transaction_model.setData(to_store)
+                transaction_model.setData(self.db_session, to_store)
             except BaseException as err:
+                # TODO: mark doublettes to take care of manually later
+                print(t['date'].isoformat(), str(t["applicant_name"] or ''), str(t["amount"]))
                 print(f"Unexpected {err=}, {type(err)=}")
+            finally:
+                pass
+                #update transaction table
         return True
 
-    def getAccounts(self):
-        account = self.view.showAccounts()
-        if not account[3]:
-            pin = simpledialog.askstring("Input", "Input an String", show='*')
-        else:
-            pin = account[3]
-        client = FinTS(account[1], account[2], pin, account[4])
-        accounts = client.getAccounts()
-        print(accounts)
-
-    def getAccountsData(self):
-        headers, results = self.model.getModeledData()
+    def getAccountsData(self, db_session):
+        headers, results = self.model.getModeledData(db_session)
         return headers, results
 
     def update(self):
-        data = self.getAccountsData()
+        data = self.getAccountsData(self.db_session)
         self.view.createTableView(data)  # headers, content = data
 
-    def addAccount(self):
-        self.view.createAddView()
+    # V
+    # V controller for adding new bank account form
 
-    def addAccountData(self, inputs):
-        if self.validate_entries(inputs):
+    def w2controller(self):
+        #self.view.add_callback('import', self.addAccountData)
+        self.view.createAddView(self.addAccountData)
+
+    def addAccountData(self):
+        if self.validate_entries(self.view.inputs):
             data = {
                 "iban": self.entries_values["iban"],
                 "username": self.entries_values["username"],
@@ -84,9 +82,9 @@ class AccountsController():
             }
 
             to_store = BankUser(**data)
-            self.model.setData(to_store)
-            return True
-        return False
+            self.model.setData(self.db_session, to_store)
+            self.update()
+            self.view.destroyAddView()
 
     def validate_entries(self, entries):
         isvalid = True

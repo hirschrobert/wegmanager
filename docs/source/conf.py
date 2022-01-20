@@ -12,7 +12,7 @@
 #
 import os
 import sys
-sys.path.insert(0, os.path.abspath('../../src'))
+sys.path.insert(0, os.path.abspath('../../wegmanager'))
 
 locale_dirs = ['locale/']
 gettext_compact = False
@@ -29,7 +29,7 @@ author = 'Robert Hirsch'
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
-extensions = ['sphinx.ext.autodoc', 'sphinx.ext.intersphinx']
+extensions = ['sphinx.ext.autodoc', 'sphinx.ext.intersphinx', 'myst_parser']
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -47,16 +47,17 @@ language = 'en'
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-#html_theme = 'alabaster'
+# html_theme = 'alabaster'
 html_theme = 'sphinx_rtd_theme'
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
-#html_static_path = ['_static']
+# html_static_path = ['_static']
 html_static_path = []
 
-# developer manual only in english. An environment variable "developer" is set to "False" in the wegmanager-german project at read the docs.
+# developer manual only in english. An environment variable "developer" is
+# set to "False" in the wegmanager-german project at read the docs.
 dev = os.environ.get('developer')
 if dev == 'False':
-	exclude_patterns += ['dev']
+    exclude_patterns += ['dev']

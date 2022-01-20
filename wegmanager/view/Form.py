@@ -1,4 +1,4 @@
-from view.AbstractTab import AbstractTab
+from wegmanager.view.AbstractTab import AbstractTab
 import tkinter as tk
 from tkinter import ttk
 
