@@ -10,3 +10,4 @@ override_dh_strip:
 	
 override_dh_shlibdeps:
 	dh_shlibdeps -l ./debian/wegmanager/opt/wegmanager/lib/python3.8/site-packages/Pillow.libs/
+	cat ./debian/wegmanager/DEBIAN/shlibs
