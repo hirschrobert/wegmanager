@@ -29,5 +29,7 @@ jobs:
         ls ${{ github.workspace }}
         sudo add-apt-repository ppa:jyrki-pulliainen/dh-virtualenv
         sudo apt-get install -y devscripts dh-virtualenv debhelper
+        python -m pip install --upgrade pip
+        python -m pip install virtualenv
         debuild -b -us -uc
     - run: echo "🍏 This job's status is ${{ job.status }}."
