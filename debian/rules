@@ -9,4 +9,5 @@ override_dh_strip:
 	dh_strip --exclude=_imaging --exclude=libtiff
 	
 override_dh_shlibdeps:
+	ls -R ./debian/wegmanager/opt/wegmanager/lib/python3.8/site-packages/
 	dh_shlibdeps -l ./debian/wegmanager/opt/wegmanager/lib/python3.8/site-packages/Pillow.libs/
