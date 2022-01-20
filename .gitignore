@@ -6,6 +6,7 @@ data/config.ini
 data/tmp/*
 tests/*
 locale-dev
+requirements.in
 
 # Eclipse
 .settings
