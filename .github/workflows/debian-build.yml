@@ -24,7 +24,7 @@ jobs:
       run: |
         sudo add-apt-repository ppa:jyrki-pulliainen/dh-virtualenv
         sudo apt-get install -y devscripts dh-virtualenv debhelper build-essential python3-virtualenv
-    	echo "🖥️ Ubuntu dependencies: ${{ steps.ubuntu-dependencies.outcome }}."
+        echo "🖥️ Ubuntu dependencies: ${{ steps.ubuntu-dependencies.outcome }}."
     - name: Install Python depenencies
       id: python-dependencies
       run: |
