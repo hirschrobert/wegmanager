@@ -1,10 +1,5 @@
-from tkinter import simpledialog, messagebox
-
-from fints.models import SEPAAccount
-
-from wegmanager.controller.FinTS import FinTS
+from tkinter import messagebox
 from wegmanager.model.BankUser import BankUser
-from wegmanager.model.Transaction import Transaction
 
 
 class AccountsController():
@@ -14,51 +9,12 @@ class AccountsController():
         self.entries_values = {}
         self.db_session = db_session
 
-    def bind(self, view):
+    def bind(self, view, callback):
         self.view = view
         data = self.getAccountsData(self.db_session)
         self.view.createTableView(data)  # headers, content = data
-        self.view.getPostingsButton.configure(command=self.get_transactions)
+        self.view.getPostingsButton.configure(command=lambda: callback(self.view.showAccounts()))
         self.view.addAccountButton.configure(command=self.w2controller)
-
-    def get_transactions(self):
-        self.writetodb(self.retreive_transactions())
-
-    def retreive_transactions(self):
-        ac = self.view.showAccounts()
-        # 1 => blz; 2 => username; 3 => pin, 4 => finurl; 5 => iban
-        account = SEPAAccount(
-            iban=ac[5], bic=None, accountnumber=None, subaccount=None,
-            blz=ac[1])
-        pin = ac[3]
-        if not pin:
-            pin = simpledialog.askstring("Input", "Input an String", show='*')
-        client = FinTS(account.blz, ac[2], pin, ac[4])
-
-        client.select_account(account.iban)
-        # probably the most reliable way to get all transactions in several
-        # requests. From today back max days (usually 90 days). Transactions
-        # already requested are identified by hash and ignored.
-        days = 90
-        raw = client.get_transactions(days)
-        postings = client.transform_transactions(raw)
-        return postings
-
-    def writetodb(self, data):
-        for t in data:
-            try:
-                transaction_model = Transaction()
-                to_store = Transaction(**t)
-                transaction_model.setData(self.db_session, to_store)
-            except BaseException as err:
-                # TODO: mark doublettes to take care of manually later
-                print(t['date'].isoformat(), str(
-                    t["applicant_name"] or ''), str(t["amount"]))
-                print(f"Could not save to database: {err=}, {type(err)=}")
-            finally:
-                pass
-                # update transaction table
-        return True
 
     def getAccountsData(self, db_session):
         headers, results = self.model.getModeledData(db_session)

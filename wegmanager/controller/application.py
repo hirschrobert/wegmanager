@@ -10,7 +10,7 @@ import pkg_resources
 
 from wegmanager.view.Transactions import Transactions
 from wegmanager.view.Invoices import Invoices
-from wegmanager.controller.TransactionController import TransactionController
+from wegmanager.controller.transaction_controller import TransactionController
 from wegmanager.controller.InvoiceController import InvoiceController
 from wegmanager.controller.db_controller import Base, open_db
 

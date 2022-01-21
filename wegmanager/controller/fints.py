@@ -3,8 +3,9 @@ Provides classes and functions to work with the Bank FinTS API.
 """
 import io
 import tkinter as tk
+
 from tkinter import ttk, Label, simpledialog
-from datetime import datetime, date
+from datetime import datetime, date, timedelta
 from typing import Dict, Optional, List
 import hashlib
 
@@ -12,7 +13,6 @@ from fints.client import FinTS3PinTanClient
 from fints.models import SEPAAccount
 from mt940.models import Transaction as FTT
 from PIL import Image, ImageTk
-import arrow
 
 
 class AccountNotFoundException(Exception):
@@ -22,9 +22,19 @@ class AccountNotFoundException(Exception):
 
     accounts: List[SEPAAccount] = []
 
-    def __init__(self, accounts: List[SEPAAccount]) -> None:
+    def __init__(self, accounts: List[SEPAAccount]=None) -> None:
         super().__init__()
         self.accounts = accounts
+
+    def __str__(self):
+        if self.accounts:
+            string = 'not found:\n'
+            for a in self.accounts:
+                string += f'{a.iban}\n'
+            return string
+        else:
+            message = _('Account not found!')
+            return message
 
 
 class FinTS:
@@ -132,10 +142,15 @@ class FinTS:
 
         :param int days: retreive transactions of last n days
         """
+
+        end_date = date.today()
+        delta = timedelta(days)
+        start_date = end_date - delta
+
         return self.f.get_transactions(
             self.selected_account,
-            start_date=arrow.now().shift(days=-1 * days).datetime,
-            end_date=arrow.now().datetime
+            start_date,
+            end_date
         )
 
     # TODO: actually belongs to model.Transaction

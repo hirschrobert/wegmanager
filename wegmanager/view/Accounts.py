@@ -2,6 +2,8 @@ import tkinter as tk
 from tkinter import ttk
 from typing import List
 
+from wegmanager.controller.fints import AccountNotFoundException
+
 
 class Accounts:
     def __init__(self, parent=None):
@@ -45,10 +47,10 @@ class Accounts:
                 self.table.insert("", tk.END, values=list(row.values()))
 
     def createButtonView(self):
-        self.getPostingsButton = tk.Button(self.w1)
-        self.getPostingsButton["text"] = _("request bank posting")
+        self.getPostingsButton = ttk.Button(self.w1, text=_(
+            "request bank posting"))
         self.getPostingsButton.grid(
-            row=1, column=0, sticky=tk.N + tk.S + tk.E + tk.W)
+            column=0, row=1, sticky=tk.N + tk.S + tk.E + tk.W)
 
         self.addAccountButton = tk.Button(self.w1)
         self.addAccountButton["text"] = _("add bank account")
@@ -74,7 +76,10 @@ class Accounts:
         for item in self.table.selection():
             values = self.table.item(item, "values")
             results.append(values)
-        return results[0]
+        if len(results) > 0:
+            return results[0]
+        else:
+            raise AccountNotFoundException()
 
     def change(self):
         items = self.selection()
@@ -135,7 +140,7 @@ class Accounts:
         self.inputs["finurl"].grid(
             column=1, row=4, sticky=tk.E, padx=5, pady=5)
 
-        # login button
+        # add account button
         addAccountDataButton = ttk.Button(self.w2, text=_(
             "Add Bank Account"), command=callback)
         addAccountDataButton.grid(
