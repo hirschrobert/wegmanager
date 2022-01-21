@@ -24,24 +24,16 @@ jobs:
       run: |
         sudo add-apt-repository ppa:jyrki-pulliainen/dh-virtualenv
         sudo apt-get install -y devscripts dh-virtualenv debhelper build-essential python3-virtualenv
-        echo "🖥️ Ubuntu dependencies: ${{ steps.ubuntu-dependencies.outcome }}."
     - name: Install Python depenencies
       id: python-dependencies
       run: |
-        echo "Installing external libraries needed for Pillow python image library."
         sudo apt-get install -y libjpeg-dev libtiff5-dev libjpeg8-dev libopenjp2-7-dev zlib1g-dev libfreetype6-dev liblcms2-dev libwebp-dev tcl8.6-dev tk8.6-dev python3-tk libharfbuzz-dev libfribidi-dev libxcb1-dev
-        echo "Installing pip and pipenv."
         python -m pip install --upgrade pip
         python -m pip install --user pipenv
-        echo "Python dependencies: ${{ steps.python-dependencies.outcome }}."
     - name: Install dependencies from project Pipfile
       id: project-dependencies
-      run: |
-        pipenv install --dev
-        echo "Project dependencies: ${{ steps.project-dependencies.outcome }}."
+      run: pipenv install --dev
     - name: pylint
       run: pipenv run pylint --fail-under=8 ./wegmanager/  
     - name: Run build in pipenv
-      run: |
-        pipenv run debuild -b -us -uc
-    - run: echo "🍏 This job's status is ${{ job.status }}."
+      run: pipenv run debuild -b -us -uc
