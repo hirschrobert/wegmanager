@@ -44,4 +44,4 @@ jobs:
     - name: Run build in pipenv
       run: |
         pipenv run debuild -b -us -uc
-    - run: echo "🍏 Build status: ${{ job.status }}."
+    - run: echo "🍏 This job's status is ${{ job.status }}."
