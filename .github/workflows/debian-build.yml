@@ -18,7 +18,7 @@ jobs:
     - run: echo "🎉 Job triggered by ${{ github.event_name }} event, runs on a ${{ runner.os }} server."
     - name: Check out repository code
       uses: actions/checkout@v2
-      run: echo "💡 Branch ${{ github.ref }} of ${{ github.repository }} repository has been cloned to the runner."
+    - run: echo "💡 Branch ${{ github.ref }} of ${{ github.repository }} repository has been cloned to the runner."
     - name: Install Ubuntu build depenencies
       id: ubuntu-dependencies
       run: |
