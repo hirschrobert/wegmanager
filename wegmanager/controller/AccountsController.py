@@ -26,7 +26,8 @@ class AccountsController():
         ac = self.view.showAccounts()
         # 1 => blz; 2 => username; 3 => pin, 4 => finurl; 5 => iban
         account = SEPAAccount(
-            iban=ac[5], bic=None, accountnumber=None, subaccount=None, blz=ac[1])
+            iban=ac[5], bic=None, accountnumber=None, subaccount=None,
+            blz=ac[1])
         pin = ac[3]
         if not pin:
             pin = simpledialog.askstring("Input", "Input an String", show='*')
@@ -49,11 +50,12 @@ class AccountsController():
                 transaction_model.setData(self.db_session, to_store)
             except BaseException as err:
                 # TODO: mark doublettes to take care of manually later
-                print(t['date'].isoformat(), str(t["applicant_name"] or ''), str(t["amount"]))
+                print(t['date'].isoformat(), str(
+                    t["applicant_name"] or ''), str(t["amount"]))
                 print(f"Unexpected {err=}, {type(err)=}")
             finally:
                 pass
-                #update transaction table
+                # update transaction table
         return True
 
     def getAccountsData(self, db_session):
@@ -68,7 +70,6 @@ class AccountsController():
     # V controller for adding new bank account form
 
     def w2controller(self):
-        #self.view.add_callback('import', self.addAccountData)
         self.view.createAddView(self.addAccountData)
 
     def addAccountData(self):
@@ -100,7 +101,8 @@ class AccountsController():
                     isvalid = False
                     self.entries_values[key] = None
                     messagebox.showerror(
-                        title="Validation error", message=_(f"{key}: must be eight digits")
+                        title="Validation error",
+                        message=_(f"{key}: must be eight digits")
                     )
             else:
                 value = item.get()

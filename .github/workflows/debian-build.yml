@@ -1,37 +1,42 @@
-name: WEG Manager debian build action
-on: [push]
-#  push:
-#    tags: 
-#      - 'v*.*.*'
-env:
-  APP_NAME: 'wegmanager'
-  VERSION: '0.0.dev1'
-  MAINTAINER: 'Robert Hirsch <dev@robert-hirsch.de>'
-  DESC: 'accounting software for apartments in ownership communities.'
+name: WEG Manager debian build test
+on:
+  push:
+    branches:
+      - main
+      - '**dev**'
+  pull_request:
+    branches:
+      - main
+      - '**dev**'
+
 jobs:
-  build-wegmanager-debian:
+  debian-build-test:
     runs-on: ubuntu-20.04
+    timeout-minutes: 10
     name: Build Package
     steps:
-    - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
-    - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
-    - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
+    - run: echo "🎉 Job triggered by ${{ github.event_name }} event, runs on a ${{ runner.os }} server."
     - name: Check out repository code
       uses: actions/checkout@v2
-#    - name: Set up Python
-#    - uses: actions/setup-python@v2
-#      with:
-#        python-version: '3.8'
-    - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
-    - run: echo "🖥️ The workflow is now ready to test your code on the runner."
-    - name: List files in the repository
+      run: echo "💡 Branch ${{ github.ref }} of ${{ github.repository }} repository has been cloned to the runner."
+    - name: Install Ubuntu build depenencies
       run: |
-        ls ${{ github.workspace }}
         sudo add-apt-repository ppa:jyrki-pulliainen/dh-virtualenv
         sudo apt-get install -y devscripts dh-virtualenv debhelper build-essential python3-virtualenv
-        sudo apt-get install -y libjpeg-dev libtiff5-dev libjpeg8-dev libopenjp2-7-dev zlib1g-dev libfreetype6-dev liblcms2-dev libwebp-dev tcl8.6-dev tk8.6-dev python3-tk libharfbuzz-dev libfribidi-dev libxcb1-dev
+      run: echo "🖥️ Ubuntu dependencies: ${{ job.status }}."
+    - name: Install Python depenencies
+      run: echo "Installing external libraries needed for Pillow python image library."
+      run: sudo apt-get install -y libjpeg-dev libtiff5-dev libjpeg8-dev libopenjp2-7-dev zlib1g-dev libfreetype6-dev liblcms2-dev libwebp-dev tcl8.6-dev tk8.6-dev python3-tk libharfbuzz-dev libfribidi-dev libxcb1-dev
+      run: echo "Installing pip and pipenv."
+      run: |
         python -m pip install --upgrade pip
         python -m pip install --user pipenv
-        pipenv install --dev
-        pipenv run debuild -b -us -uc
-    - run: echo "🍏 This job's status is ${{ job.status }}."
+      run: echo "🐍 Python dependencies: ${{ job.status }}."
+    - name: Install dependencies from project Pipfile
+      run: pipenv install --dev
+      run: echo "Project dependencies: ${{ job.status }}."
+    - name: pylint
+      run: pipenv run pylint --fail-under=8 ./wegmanager/  
+    - name: Run build in pipenv
+      run: pipenv run debuild -b -us -uc
+      run: echo "🍏 Build status: ${{ job.status }}."
