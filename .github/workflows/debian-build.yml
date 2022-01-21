@@ -20,7 +20,7 @@ jobs:
       uses: actions/checkout@v2
       run: echo "💡 Branch ${{ github.ref }} of ${{ github.repository }} repository has been cloned to the runner."
     - name: Install Ubuntu build depenencies
-    - id: ubuntu-dependencies
+      id: ubuntu-dependencies
       run: |
         sudo add-apt-repository ppa:jyrki-pulliainen/dh-virtualenv
         sudo apt-get install -y devscripts dh-virtualenv debhelper build-essential python3-virtualenv
