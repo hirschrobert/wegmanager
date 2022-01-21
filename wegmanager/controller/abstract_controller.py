@@ -1,3 +1,4 @@
+# pylint: disable=missing-module-docstring
 from abc import ABC, abstractmethod
 from wegmanager.view.AbstractTab import AbstractTab
 

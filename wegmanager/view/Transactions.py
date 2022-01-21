@@ -1,7 +1,8 @@
 from tkinter import ttk
 import tkinter as tk
-from wegmanager.view.AbstractTab import AbstractTab
 from typing import List
+
+from wegmanager.view.AbstractTab import AbstractTab
 from wegmanager.view.Form import Form
 
 

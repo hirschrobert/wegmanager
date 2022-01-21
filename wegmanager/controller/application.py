@@ -1,17 +1,26 @@
+# pylint: disable=missing-module-docstring
+import os
+import gettext
+from configparser import ConfigParser
+
 from tkinter import ttk
 import tkinter as tk
+
+import pkg_resources
+
 from wegmanager.view.Transactions import Transactions
 from wegmanager.view.Invoices import Invoices
 from wegmanager.controller.TransactionController import TransactionController
 from wegmanager.controller.InvoiceController import InvoiceController
-from wegmanager.controller.DbController import Base, open_db
-import gettext
-from configparser import ConfigParser
-import os
-import pkg_resources
+from wegmanager.controller.db_controller import Base, open_db
 
 
-class Application(ttk.Notebook):
+class Application(ttk.Notebook):  # pylint: disable=too-many-ancestors
+    '''
+    Main Application class that defines the detailed application features.
+    It inherits from ttk.Notebook and starts the individual tabs.
+     '''
+
     def __init__(self, parent=None):
         super().__init__(parent)
         self.parent = parent  # window
@@ -21,7 +30,7 @@ class Application(ttk.Notebook):
         self.grid_rowconfigure(0, weight=1)
         self.grid_columnconfigure(0, weight=1)
 
-        self.config = self.createConfig()
+        self.config = self.create_config()
         self.i18n()
         db_session = self.start_db()
 
@@ -32,52 +41,73 @@ class Application(ttk.Notebook):
         self.mainloop()
 
     def start_db(self):
+        '''
+        Starts the connection to the database.
+         '''
+
         db_path = os.path.join(self.config['SQLITE']['path'], 'db.sqlite')
 
-        # return Base, SessionLocal(), engine
-        SessionLocal, engine = open_db(db_path)
+        session_local, engine = open_db(db_path)
 
         Base.metadata.create_all(  # @UndefinedVariable
             bind=engine, checkfirst=True)
 
-        return SessionLocal
+        return session_local
 
     def new_tab(self, controller, view, name: str):
+        '''
+        Binds controller and view for a new tab.
+        '''
+
         view = view(self)
         controller.bind(view)
         self.add(view, text=name)
 
-    def get_home_path(self):
+    @staticmethod
+    def get_home_path():
+        '''
+        Get $(HOME) Path of user. Currently linux only.
+        '''
+
         home_folder = os.getenv('HOME')
         return home_folder
 
-    def createConfig(self):
-        # TODO: check if already present
+    def create_config(self):
+        '''
+        Use values from config file. Create config file if not exist.
+        '''
+
         config_object = ConfigParser()
 
-        config_object["SETUP"] = {
-            "language": "de",
-        }
-
-        config_object["SQLITE"] = {
-            "path": "/var/opt/wegmanager/database",
-        }
-
-        # create file if not exist and write above config
-        # /usr/lib/wegmanager/config/config.ini
-
         # might not work with Win and/or Mac
-
         home_folder = self.get_home_path()
         config_path = os.path.join(home_folder, '.config', 'wegmanager')
         if not os.path.exists(config_path):
             os.makedirs(config_path)
 
-        with open(os.path.join(config_path, 'config'), 'w+') as conf:
-            config_object.write(conf)
+        config_path_file = os.path.join(config_path, 'config')
+        if os.path.isfile(config_path_file):
+            config_object.read(config_path_file)
+        else:
+
+            config_object["SETUP"] = {
+                "language": "de",
+            }
+
+            config_object["SQLITE"] = {
+                "path": "/var/opt/wegmanager/database",
+            }
+            with open(os.path.join(config_path, 'config'),
+                      'w+',
+                      encoding='utf-8') as conf:
+                config_object.write(conf)
         return config_object
 
     def i18n(self):
+        '''
+        Setup gettext translation
+        '''
+
         # find . -type f \( -name '*.py' \) -print > locale/filelist # inside main project folder
         # xgettext --files-from=locale/filelist --from-code=utf-8 -p locale/
         # msginit -i locale/messages.pot --locale=de_DE.utf-8 -o locale/de/LC_MESSAGES/messages.po
@@ -89,5 +119,5 @@ class Application(ttk.Notebook):
             i18n = gettext.translation(
                 'messages', localepath, [self.config['SETUP']['language']])
             i18n.install()
-        except BaseException as err:
-            print(f"Unexpected {err=}, {type(err)=}")
+        except FileNotFoundError as err:
+            print(f"Files for translation not found: {err.filename}!")

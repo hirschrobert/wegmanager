@@ -1,6 +1,7 @@
-from wegmanager.controller.DbController import Base, get_db
 from sqlalchemy import Column, String, Integer
 from sqlalchemy.inspection import inspect
+
+from wegmanager.controller.db_controller import Base, get_db
 
 
 class BankUser(Base):

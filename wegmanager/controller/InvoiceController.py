@@ -1,4 +1,4 @@
-from wegmanager.controller.AbstractController import AbstractController
+from wegmanager.controller.abstract_controller import AbstractController
 from wegmanager.view.Invoices import Invoices
 
 

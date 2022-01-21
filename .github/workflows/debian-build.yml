@@ -34,6 +34,6 @@ jobs:
       id: project-dependencies
       run: pipenv install --dev
     - name: pylint
-      run: pipenv run pylint --fail-under=8 ./wegmanager/  
+      run: pipenv run pylint ./wegmanager/  
     - name: Run build in pipenv
       run: pipenv run debuild -b -us -uc

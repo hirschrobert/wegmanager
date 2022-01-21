@@ -1,13 +1,14 @@
-from wegmanager.controller.AbstractController import AbstractController
-from wegmanager.view.Transactions import Transactions
-from wegmanager.view.Accounts import Accounts
-from wegmanager.model.Transaction import Transaction as TransactionModel
-from wegmanager.controller.AccountsController import AccountsController
 import os
 import csv
 import sys
 import tempfile
 import time
+
+from wegmanager.controller.abstract_controller import AbstractController
+from wegmanager.view.Transactions import Transactions
+from wegmanager.view.Accounts import Accounts
+from wegmanager.model.Transaction import Transaction as TransactionModel
+from wegmanager.controller.accounts_controller import AccountsController
 
 
 class TransactionController(AbstractController):
@@ -52,8 +53,7 @@ class TransactionController(AbstractController):
                     writer.writerow(row.values())
                 f.seek(0)
             except csv.Error as e:
-                sys.exit('file {}, line {}: {}'.format(
-                    path, writer.line_num, e))
+                sys.exit(f'file {path}, line {writer.line}: {e}')
         os.close(fd)
         os.system('/usr/bin/xdg-open ' + path)
         time.sleep(3)
@@ -67,7 +67,6 @@ class TransactionController(AbstractController):
     def refresh(self):
         data = self.getTableData()
         self.view.createTableView(data)
-
 
     def getTableData(self):
         headers, results = self.model.getModeledData(self.db_session)

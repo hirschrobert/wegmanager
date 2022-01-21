@@ -1,6 +1,7 @@
-from wegmanager.view.AbstractTab import AbstractTab
 import tkinter as tk
 from tkinter import ttk
+
+from wegmanager.view.AbstractTab import AbstractTab
 
 
 class Form(AbstractTab):

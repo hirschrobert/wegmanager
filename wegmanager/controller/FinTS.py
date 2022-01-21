@@ -1,18 +1,18 @@
 """
 Provides classes and functions to work with the Bank FinTS API.
 """
+import io
+import tkinter as tk
+from tkinter import ttk, Label, simpledialog
+from datetime import datetime, date
+from typing import Dict, Optional, List
+import hashlib
+
 from fints.client import FinTS3PinTanClient
 from fints.models import SEPAAccount
 from mt940.models import Transaction as FTT
-from datetime import datetime, date
-from tkinter import ttk, Label, simpledialog
-from PIL import Image
-import io
-import tkinter as tk
+from PIL import Image, ImageTk
 import arrow
-from typing import Dict, Optional, List
-import hashlib
-from pprint import pprint
 
 
 class AccountNotFoundException(Exception):
@@ -45,7 +45,11 @@ class FinTS:
             finurl,  # Deutsche Bank: https://fints.deutsche-bank.de
             product_id=fints_product_id
         )
+        self.parentwindow = None
         self.check_tan()
+
+    def set_parentwindow(self, parentwindow):
+        self.parentwindow = parentwindow
 
     def check_tan(self):
         with self.f:
@@ -57,17 +61,17 @@ class FinTS:
 
                 data = self.decode_phototan_image(challenge_hhduc)
                 print(data)
-                #bytes_io = io.BytesIO(data['image'])
+                # bytes_io = io.BytesIO(data['image'])
                 bytes_io = io.BytesIO(challenge_hhduc)
                 img = Image.open(bytes_io)
                 img.save("../data/phototan.png")
 
                 img = ImageTk.PhotoImage(Image.open(bytes_io))
                 self.open_tan_view(img)
-                #root2 = Tk()
-                #img = ImageTk.PhotoImage(Image.open(bytes_io))
-                #panel = Label(root2, image = img)
-                #panel.pack(side = "bottom", fill = "both", expand = "yes")
+                # root2 = Tk()
+                # img = ImageTk.PhotoImage(Image.open(bytes_io))
+                # panel = Label(root2, image = img)
+                # panel.pack(side = "bottom", fill = "both", expand = "yes")
                 # root2.mainloop()
                 tan = simpledialog.askstring(
                     _("TAN Input"), _("A TAN is required:"))
@@ -82,10 +86,10 @@ class FinTS:
                 print(response.responses)
 
     # TODO: move to view
-    def open_tan_view(self, parentwindow, img):
-        self.w3 = tk.Toplevel(parentwindow)
+    def open_tan_view(self, img):
+        self.w3 = tk.Toplevel(self.parentwindow)
         self.w3.title(_('photo TAN'))
-        self.w3.group(parentwindow)
+        self.w3.group(self.parentwindow)
         phototan = Label(self.w3, image=img)
         phototan.grid(column=0, row=0, sticky=tk.W, padx=5, pady=5)
 
@@ -97,8 +101,9 @@ class FinTS:
         tan.grid(column=1, row=1, sticky=tk.E, padx=5, pady=5)
 
         # login button
-        #addAccountDataButton = ttk.Button(self.w3, text=_("OK"))
-        #addAccountDataButton.grid(column=0, row=2, sticky=tk.E, padx=5, pady=5)
+        # addAccountDataButton = ttk.Button(self.w3, text=_("OK"))
+        # addAccountDataButton.grid(column=0, row=2,
+        #                             sticky=tk.E, padx=5, pady=5)
 
         # cancel button
         cancel_button = ttk.Button(self.w3, text=_(
@@ -125,10 +130,11 @@ class FinTS:
         """
         Get transactions for the selected account.
 
-        :param int days: retreive transactions of last n days 
+        :param int days: retreive transactions of last n days
         """
         return self.f.get_transactions(
-            self.selected_account, start_date=arrow.now().shift(days=-1 * days).datetime,
+            self.selected_account,
+            start_date=arrow.now().shift(days=-1 * days).datetime,
             end_date=arrow.now().datetime
         )
 
@@ -157,11 +163,11 @@ class FinTS:
             #    for x in transformed
             #    if date.fromisoformat(x["date"]) == transaction_date
             #    and x["amount"] == milliunits_amount
-            #]
-            #occurence = len(similar_transactions) + 1
+            # ]
+            # occurence = len(similar_transactions) + 1
             # import_id = (
             #    f"YNAB:{milliunits_amount}:{transaction_date.isoformat()}:{occurence}"
-            #)
+            # )
 
             # If this is a PayPal transaction, try to get the Payee from the memo
             # if PAYPAL_PAYEE_REGEX.match(data["applicant_name"]):
@@ -193,11 +199,13 @@ class FinTS:
             t['end_to_end_reference'] = data.get('end_to_end_reference', '')
 
             try:
-                hash_str = t['json_original']['date'] + str(t["amount"]) 
+                hash_str = t['json_original']['date'] + str(t["amount"])
                 hash_str += str(t['json_original'].get('transaction_code', ''))
                 hash_str += t["purpose"] + t['json_original']["id"]
-                hash_str += str(t["applicant_bin"] or '') + str(t["applicant_iban"] or '') 
-                hash_str += str(t["applicant_name"] or '') + t["purpose"] + t['json_original']["id"]
+                hash_str += str(t["applicant_bin"] or '') + \
+                    str(t["applicant_iban"] or '')
+                hash_str += str(t["applicant_name"] or '') + \
+                    t["purpose"] + t['json_original']["id"]
                 hash_str += str(t['end_to_end_reference'] or '')
             except TypeError as err:
                 print(err)

@@ -1,7 +1,9 @@
-from wegmanager.controller.DbController import Base, get_db
-from sqlalchemy import Column, String, Integer, Float, CHAR, DATE, DATETIME, JSON
+from sqlalchemy import (Column, String, Integer, Float,
+                        CHAR, DATE, DATETIME, JSON)
 from sqlalchemy.inspection import inspect
 from sqlalchemy.sql.sqltypes import NVARCHAR
+
+from wegmanager.controller.db_controller import Base, get_db
 
 
 class Transaction(Base):
