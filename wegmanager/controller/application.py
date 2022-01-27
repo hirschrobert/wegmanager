@@ -8,11 +8,11 @@ import tkinter as tk
 
 import pkg_resources
 
-from wegmanager.view.Transactions import Transactions
+from wegmanager.view.transactions import Transactions
 from wegmanager.view.Invoices import Invoices
 from wegmanager.controller.transaction_controller import TransactionController
 from wegmanager.controller.InvoiceController import InvoiceController
-from wegmanager.controller.db_controller import Base, open_db
+from wegmanager.controller.db_controller import Dtb
 
 
 class Application(ttk.Notebook):  # pylint: disable=too-many-ancestors
@@ -32,27 +32,23 @@ class Application(ttk.Notebook):  # pylint: disable=too-many-ancestors
 
         self.config = self.create_config()
         self.i18n()
-        db_session = self.start_db()
+
+        self.dtb = Dtb(self.get_db_path())
 
         self.new_tab(view=Transactions, controller=TransactionController(
-            db_session), name=_("Bank Transactions"))
+            self.dtb), name=_("Bank Transactions"))
         self.new_tab(view=Invoices, controller=InvoiceController(
-            db_session), name=_("Invoices"))
+            self.dtb), name=_("Invoices"))
         self.mainloop()
 
-    def start_db(self):
+    def get_db_path(self):
         '''
         Starts the connection to the database.
          '''
 
         db_path = os.path.join(self.config['SQLITE']['path'], 'db.sqlite')
 
-        session_local, engine = open_db(db_path)
-
-        Base.metadata.create_all(  # @UndefinedVariable
-            bind=engine, checkfirst=True)
-
-        return session_local
+        return db_path
 
     def new_tab(self, controller, view, name: str):
         '''

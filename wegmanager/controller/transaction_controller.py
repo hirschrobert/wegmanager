@@ -3,6 +3,7 @@ import csv
 import sys
 import tempfile
 import time
+from datetime import datetime
 
 from tkinter import simpledialog
 
@@ -11,18 +12,23 @@ from fints.models import SEPAAccount
 from wegmanager.controller.abstract_controller import AbstractController
 from wegmanager.controller.accounts_controller import AccountsController
 from wegmanager.controller.fints import FinTS
-from wegmanager.view.Transactions import Transactions
+from wegmanager.view.transactions import Transactions
 from wegmanager.view.Accounts import Accounts
-from wegmanager.model.Transaction import Transaction as TransactionModel
+from wegmanager.model.transaction import Transaction as TransactionModel
+from wegmanager.model.transaction_audited import TransactionAudited
+from wegmanager.model.bank_user import BankUser
+from wegmanager.model import Base
 from argparse import ngettext
+
+from wegmanager.controller import db_session
 
 
 class TransactionController(AbstractController):
-    def __init__(self, db_session) -> None:
+    def __init__(self, dtb) -> None:
         super().__init__()
         self.view = None
         self.model = TransactionModel()
-        self.db_session = db_session
+        self.dtb = dtb
 
     def bind(self, view: Transactions):
         self.view = view  # notebook
@@ -32,7 +38,7 @@ class TransactionController(AbstractController):
         self.view.getTransactions.configure(command=self.getAccounts)
 
     def getTableData(self):
-        headers, results = self.model.getModeledData(self.db_session)
+        headers, results = self.dtb.getModeledData(TransactionAudited)
         return headers, results
 
     def refresh(self):
@@ -40,17 +46,23 @@ class TransactionController(AbstractController):
         self.view.create_table(data)
 
     def get_transactions(self, ac):
-        self.writetodb(self.retreive_transactions(ac))
+        id = int(ac[0])
+        with self.dtb.get_session() as dtb:
+            bank_user = dtb.query(BankUser).get(id)
+            finurl = bank_user.bank.finurl
+            custom_fints = bank_user.bank.custom_fints
+        postings = self.retreive_transactions(bank_user, finurl)
+        self.writetodb(bank_user, custom_fints, postings)
 
-    def retreive_transactions(self, ac):
-        # 1 => blz; 2 => username; 3 => pin, 4 => finurl; 5 => iban
+    def retreive_transactions(self, bank_user, finurl):
+
         account = SEPAAccount(
-            iban=ac[5], bic=None, accountnumber=None, subaccount=None,
-            blz=ac[1])
-        pin = ac[3]
+            iban=bank_user.iban, bic=None, accountnumber=None, subaccount=None,
+            blz=str(bank_user.blz))
+        pin = bank_user.pin
         if not pin:
             pin = simpledialog.askstring("Input", "Input an String", show='*')
-        client = FinTS(account.blz, ac[2], pin, ac[4])
+        client = FinTS(account.blz, bank_user.username, pin, finurl)
 
         client.select_account(account.iban)
         # probably the most reliable way to get all transactions in several
@@ -61,24 +73,60 @@ class TransactionController(AbstractController):
         postings = client.transform_transactions(raw)
         return postings
 
-    def writetodb(self, data):
-        counter = 0
+    def writetodb(self, bank_user, custom_fints, data):
+        '''
+        Writes retreived bank transactions in original to 'transactions' table.
+        Then it writes some keys from originally retreived bank transactions in
+        'transactions_audited.
+        '''
+        c_transactions = 0
+        #c_transactions_audited = 0
         for t in data:
+            t['bank_user_id'] = bank_user.id
+            to_store = TransactionModel(**t)
             try:
-                transaction_model = TransactionModel()
-                to_store = TransactionModel(**t)
-                transaction_model.setData(self.db_session, to_store)
-                counter += 1
+                transaction_id = self.dtb.setData(to_store)
+                c_transactions += 1
             except BaseException as err:
                 # TODO: mark doublettes to take care of manually later
-                print(t['date'].isoformat(), str(
-                    t["applicant_name"] or ''), str(t["amount"]))
+                print(t['json_original']['date'], str(
+                    t['json_original']["applicant_name"] or ''), str(t['json_original']["amount"]))
                 print(_(f'Could not save to database: {err=}, {type(err)=}'))
+            finally:
+                # get id to try to write to transactions audited at least
+                with db_session() as dtb:
+                    result = dtb.query(TransactionModel.id, TransactionModel.hash).filter(
+                        TransactionModel.hash == t['hash']).first()
+                transaction = TransactionModel()
+                transaction_id = result.id
+                self.copy_transactions(
+                    transaction_id, t, bank_user.iban, custom_fints)
+
         message = ngettext('{0} transaction inserted in database',
-                           '{0} transactions inserted in database', counter)
-        print(message.format(counter))
+                           '{0} transactions inserted in database', c_transactions)
+        print(message.format(c_transactions))
         self.refresh()
         return True
+
+    def copy_transactions(self, transaction_id, data, iban, custom_fints):
+        try:
+            # map keys of our app ("custom_fints.key()") with keys of
+            # external bank ("custom_fints.value()")
+            audited = {}
+            audited['transaction_id'] = transaction_id
+            for key, value in custom_fints.items():
+                # value is a key for the retreived data!
+                if value not in data['json_original']:
+                    data['json_original'].pop(value, None)
+                    continue
+                audited[key] = data['json_original'][value]
+            audited['date'] = datetime.strptime(
+                audited['date'], '%Y-%m-%d').date()
+            to_store = TransactionAudited(**audited)
+            self.dtb.setData(to_store)
+        except BaseException as err:
+            print(
+                _(f'Could not save transactions to mapped table: {err=}, {type(err)=}'))
 
     def export(self):
         headers, content = self.getTableData()
@@ -111,6 +159,6 @@ class TransactionController(AbstractController):
         os.unlink(path)
 
     def getAccounts(self):
-        c = AccountsController(self.db_session)
+        c = AccountsController(self.dtb)
         v = Accounts(self.view)
         c.bind(v, self.get_transactions)

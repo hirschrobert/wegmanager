@@ -17,6 +17,7 @@ docs_extras = [
 
 data_files = [
     ('config', ['data/config.sample.ini']),
+    ('config', ['data/bank_attributes.json']),
     ('share/applications/', ['wegmanager/wegmanager.desktop']),
     ('lib/python3.8/site-packages/wegmanager', ['wegmanager/icon.png']),
     ('', ['debian/start.sh']),

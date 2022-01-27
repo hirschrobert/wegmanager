@@ -1,0 +1,26 @@
+[
+	{
+		"name": "Deutsche Bank AG",
+		"name_alt": "",
+		"bic": "DEUTDEFFXXX",
+		"finurl": "https://fints.deutsche-bank.de",
+		"custom_fints": {
+							"date": "date",
+							"applicant_name": "applicant_name",
+							"applicant_iban": "applicant_iban",
+							"applicant_bin": "applicant_bin",
+							"applicant_creditor_id": "applicant_creditor_id",
+							"purpose,amount": "purpose,amount",
+							"currency": "currency",
+							"customer_reference": "customer_reference",
+							"end_to_end_reference": "end_to_end_reference"
+						}
+	},
+	{
+		"name": "Deutsche Kreditbank Aktiengesellschaft",
+		"name_alt": "DKB",
+		"bic": "BYLADEM1001",
+		"finurl": "https://banking-dkb.s-fints-pt-dkb.de/fints30",
+		"custom_fints": ""
+	}
+]

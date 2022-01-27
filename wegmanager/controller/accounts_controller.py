@@ -1,34 +1,48 @@
 from tkinter import messagebox
-from wegmanager.model.BankUser import BankUser
+from wegmanager.model.bank_user import BankUser
+from wegmanager.model.bank import Bank
 
 
 class AccountsController():
-    def __init__(self, db_session) -> None:
+    def __init__(self, dtb) -> None:
         self.view = None
         self.model = BankUser()
         self.entries_values = {}
-        self.db_session = db_session
+        self.dtb = dtb
 
     def bind(self, view, callback):
         self.view = view
-        data = self.getAccountsData(self.db_session)
+        data = self.getAccountsData()
         self.view.createTableView(data)  # headers, content = data
-        self.view.getPostingsButton.configure(command=lambda: callback(self.view.showAccounts()))
+        self.view.getPostingsButton.configure(
+            command=lambda: callback(self.view.showAccounts()))
         self.view.addAccountButton.configure(command=self.w2controller)
 
-    def getAccountsData(self, db_session):
-        headers, results = self.model.getModeledData(db_session)
+    def getAccountsData(self):
+        headers, results = self.dtb.getModeledData(self.model)
         return headers, results
 
     def update(self):
-        data = self.getAccountsData(self.db_session)
+        data = self.getAccountsData()
         self.view.createTableView(data)  # headers, content = data
 
     # V
     # V controller for adding new bank account form
 
     def w2controller(self):
-        self.view.createAddView(self.addAccountData)
+        callbacks = {}
+        callbacks['addAccountData'] = self.addAccountData
+        callbacks['get_bank_by_id'] = self.get_bank_by_id
+        self.view.createAddView(self.get_banks_tuple(),
+                                **callbacks)
+
+    def get_banks_tuple(self):
+        columns = [Bank.id, Bank.name]
+        return self.dtb.get_column_data(*columns)
+
+    def get_bank_by_id(self, id):
+        res = self.dtb.get_by_id(id)
+        print(res)
 
     def addAccountData(self):
         if self.validate_entries(self.view.inputs):
@@ -37,11 +51,10 @@ class AccountsController():
                 "username": self.entries_values["username"],
                 "pin": self.entries_values["pin"],
                 "blz": self.entries_values["blz"],
-                "finurl": self.entries_values["finurl"]
+                "bank_id": self.entries_values["bank_id"]
             }
-
             to_store = BankUser(**data)
-            self.model.setData(self.db_session, to_store)
+            self.dtb.setData(to_store)
             self.update()
             self.view.destroyAddView()
 
@@ -62,6 +75,8 @@ class AccountsController():
                         title="Validation error",
                         message=_(f"{key}: must be eight digits")
                     )
+            elif key == 'bank_id':
+                self.entries_values[key] = item
             else:
                 value = item.get()
                 self.entries_values[key] = value

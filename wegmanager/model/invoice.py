@@ -1,18 +1,32 @@
-from sqlalchemy import Column, String, Integer
+from sqlalchemy import Column, Integer, DATE, VARCHAR, NVARCHAR, DATETIME, Float, JSON
 from sqlalchemy.inspection import inspect
+from sqlalchemy.orm import relationship
 
-from wegmanager.controller.db_controller import Base, get_db
+from wegmanager.model import Base
 
 
-class BankUser(Base):
-    __tablename__ = "bank_user"
+class Invoice(Base):
+    __tablename__ = "invoices"
     id = Column(Integer, primary_key=True)
-    blz = Column(Integer())
-    username = Column(String(25))
-    pin = Column(String(25))
-    finurl = Column(String(60))
-    iban = Column(String(34))
-
+    invoice_date = Column(DATE)
+    datetime_registered = Column(DATETIME)
+    description = Column(NVARCHAR)
+    amount_pretax = Column(Float())
+    taxes = Column(JSON())
+    amount_handyman = Column(Float())
+    amount_material = Column(Float())
+    invoice_number = Column(NVARCHAR)
+    #creditor = relationship("BusinessPartner", back_populates="invoices", uselist=False)
+    #debitor = relationship("BusinessPartner", back_populates="invoices", uselist=False)
+    date_service_beginn = Column(DATE)
+    date_service_end = Column(DATE)
+    #skr_account = 
+    #housing_account = 
+    #project_1
+    #project_2
+    #notes = Column(VARCHAR)
+    
+    @staticmethod
     def headers(self):
         headers = {'iban': _('IBAN'),
                    'username': _('Username')

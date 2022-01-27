@@ -198,30 +198,28 @@ class FinTS:
             t['json_original']['amount'] = str(float_amount)
             t['json_original']['date'] = t['json_original']['date'].isoformat()
 
-            t['account_iban'] = self.selected_account.iban
+            #t['account_iban'] = self.selected_account.iban
             t['date_retreived'] = datetime.now().replace(microsecond=0)
 
-            t['date'] = datetime.strptime(
-                t['json_original']['date'], '%Y-%m-%d').date()
-            t['applicant_name'] = data['applicant_name']
-            t['applicant_iban'] = data['applicant_iban']
-            t['applicant_bin'] = data['applicant_bin']
-            t['applicant_creditor_id'] = data.get('applicant_creditor_id', '')
-            t['purpose'] = data['purpose']
-            t['amount'] = float_amount
-            t['currency'] = data['currency']
-            t['customer_reference'] = data['customer_reference']
-            t['end_to_end_reference'] = data.get('end_to_end_reference', '')
+            #t['date'] = datetime.strptime(
+            #    t['json_original']['date'], '%Y-%m-%d').date()
+            #t['applicant_name'] = data['applicant_name']
+            #t['applicant_iban'] = data['applicant_iban']
+            #t['applicant_bin'] = data['applicant_bin']
+            #t['applicant_creditor_id'] = data.get('applicant_creditor_id', '')
+            #t['purpose'] = data['purpose']
+            #t['amount'] = float_amount
+            #t['currency'] = data['currency']
+            #t['customer_reference'] = data['customer_reference']
+            #t['end_to_end_reference'] = data.get('end_to_end_reference', '')
 
             try:
-                hash_str = t['json_original']['date'] + str(t["amount"])
+                hash_str = t['json_original']['date'] + str(float_amount)
                 hash_str += str(t['json_original'].get('transaction_code', ''))
-                hash_str += t["purpose"] + t['json_original']["id"]
-                hash_str += str(t["applicant_bin"] or '') + \
-                    str(t["applicant_iban"] or '')
-                hash_str += str(t["applicant_name"] or '') + \
-                    t["purpose"] + t['json_original']["id"]
-                hash_str += str(t['end_to_end_reference'] or '')
+                hash_str += data['purpose'] + t['json_original']["id"]
+                hash_str += str(data['applicant_bin'] or '') + str(data['applicant_iban'] or '')
+                hash_str += str(data['applicant_name'] or '')
+                hash_str += str(data.get('end_to_end_reference', '') or '')
             except TypeError as err:
                 print(err)
                 raise

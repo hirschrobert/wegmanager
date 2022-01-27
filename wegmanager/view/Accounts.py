@@ -3,6 +3,7 @@ from tkinter import ttk
 from typing import List
 
 from wegmanager.controller.fints import AccountNotFoundException
+from wegmanager.view.widgets import Combobox
 
 
 class Accounts:
@@ -16,6 +17,7 @@ class Accounts:
         self.table = None
         self.w2 = None
         self.inputs = {}
+        self.cmb = None
 
     def createTableView(self, data: List):
         self.create_table(self.w1, data)
@@ -98,7 +100,7 @@ class Accounts:
     # V
     # V form view for adding new bank account
 
-    def createAddView(self, callback):
+    def createAddView(self, values, **callbacks):
         self.w2 = tk.Toplevel(self.w1)
         self.w2.title(_('Add Bank Account'))
         self.w2.group(self.parent)
@@ -126,23 +128,29 @@ class Accounts:
         self.inputs["pin"].grid(column=1, row=2, sticky=tk.E, padx=5, pady=5)
 
         # blz
-        blz_label = ttk.Label(self.w2, text=_("German Bank Code") + ":")
+        blz_label = ttk.Label(self.w2, text=_("German Bank Code (BLZ)") + ":")
         blz_label.grid(column=0, row=3, sticky=tk.W, padx=5, pady=5)
 
         self.inputs["blz"] = ttk.Entry(self.w2)
         self.inputs["blz"].grid(column=1, row=3, sticky=tk.E, padx=5, pady=5)
 
         # finurl
-        finurl_label = ttk.Label(self.w2, text=_("FinTS Bank URL") + ":")
+        finurl_label = ttk.Label(self.w2, text=_("Select your bank") + ":")
         finurl_label.grid(column=0, row=4, sticky=tk.W, padx=5, pady=5)
 
-        self.inputs["finurl"] = ttk.Entry(self.w2)
-        self.inputs["finurl"].grid(
-            column=1, row=4, sticky=tk.E, padx=5, pady=5)
+        self.inputs["bank_id"] = None
+        self.cmb = Combobox(frame=self.w2, values=values, row=4,
+                            column=1, callback=self.inputs)
+
+        #combo.grid(column=1, row=4, sticky=tk.E, padx=5, pady=5)
+
+        #self.inputs["finurl"] = ttk.Entry(self.w2)
+        # self.inputs["finurl"].grid(
+        #    column=1, row=4, sticky=tk.E, padx=5, pady=5)
 
         # add account button
         addAccountDataButton = ttk.Button(self.w2, text=_(
-            "Add Bank Account"), command=callback)
+            "Add Bank Account"), command=callbacks['addAccountData'])
         addAccountDataButton.grid(
             column=0, row=5, sticky=tk.E, padx=5, pady=5)
 
@@ -150,6 +158,9 @@ class Accounts:
         cancel_button = ttk.Button(self.w2, text=_(
             "Cancel"), command=self.w2.destroy)
         cancel_button.grid(column=1, row=5, sticky=tk.E, padx=5, pady=5)
+
+    def update_input(self):
+        self.inputs["bank"] = self.cmb.get()
 
     def destroyAddView(self):
         self.w2.destroy()
