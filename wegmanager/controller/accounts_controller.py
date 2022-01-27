@@ -12,18 +12,18 @@ class AccountsController():
 
     def bind(self, view, callback):
         self.view = view
-        data = self.getAccountsData()
+        data = self.get_accounts_data()
         self.view.createTableView(data)  # headers, content = data
         self.view.getPostingsButton.configure(
             command=lambda: callback(self.view.showAccounts()))
         self.view.addAccountButton.configure(command=self.w2controller)
 
-    def getAccountsData(self):
+    def get_accounts_data(self):
         headers, results = self.dtb.getModeledData(self.model)
         return headers, results
 
     def update(self):
-        data = self.getAccountsData()
+        data = self.get_accounts_data()
         self.view.createTableView(data)  # headers, content = data
 
     # V
@@ -31,7 +31,7 @@ class AccountsController():
 
     def w2controller(self):
         callbacks = {}
-        callbacks['addAccountData'] = self.addAccountData
+        callbacks['add_account_data'] = self.add_account_data
         callbacks['get_bank_by_id'] = self.get_bank_by_id
         self.view.createAddView(self.get_banks_tuple(),
                                 **callbacks)
@@ -40,11 +40,11 @@ class AccountsController():
         columns = [Bank.id, Bank.name]
         return self.dtb.get_column_data(*columns)
 
-    def get_bank_by_id(self, id):
-        res = self.dtb.get_by_id(id)
-        print(res)
+    def get_bank_by_id(self, bank_id):
+        res = self.dtb.get_by_id(bank_id)
+        return res
 
-    def addAccountData(self):
+    def add_account_data(self):
         if self.validate_entries(self.view.inputs):
             data = {
                 "iban": self.entries_values["iban"],

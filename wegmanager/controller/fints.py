@@ -3,11 +3,11 @@ Provides classes and functions to work with the Bank FinTS API.
 """
 import io
 import tkinter as tk
+from pprint import pprint
 
 from tkinter import ttk, Label, simpledialog
 from datetime import datetime, date, timedelta
 from typing import Dict, Optional, List
-import hashlib
 
 from fints.client import FinTS3PinTanClient
 from fints.models import SEPAAccount
@@ -52,7 +52,7 @@ class FinTS:
             blz,  # Your bank's BLZ
             username,  # Your login name
             pin,  # Your banking PIN
-            finurl,  # Deutsche Bank: https://fints.deutsche-bank.de
+            finurl,
             product_id=fints_product_id
         )
         self.parentwindow = None
@@ -164,67 +164,17 @@ class FinTS:
         for transaction in transactions:
             data = transaction.data
 
-            # should not happen, because end date today is given to FinTS
-            # request
-            transaction_date = data["date"]
-            if transaction_date > date.today():
-                # This is a future transaction, skip it. We'll import it at the
-                # day it actually occurs.
-                continue
-
-            float_amount = float(data["amount"].amount)
-            # similar_transactions = [
-            #    x
-            #    for x in transformed
-            #    if date.fromisoformat(x["date"]) == transaction_date
-            #    and x["amount"] == milliunits_amount
-            # ]
-            # occurence = len(similar_transactions) + 1
-            # import_id = (
-            #    f"YNAB:{milliunits_amount}:{transaction_date.isoformat()}:{occurence}"
-            # )
-
-            # If this is a PayPal transaction, try to get the Payee from the memo
-            # if PAYPAL_PAYEE_REGEX.match(data["applicant_name"]):
-            #    payee = PAYPAL_MEMO_REGEX.match(data["purpose"])
-            #    if payee is not None:
-            #        payee = payee.group(2)
-            #        if payee.endswith(PAYPAL_SUFFIX):
-            #            payee = payee[: -len(PAYPAL_SUFFIX)]
-            #        data["applicant_name"] = "PAYPAL " + payee
-
             t = {}
             t['json_original'] = data
-            t['json_original']['amount'] = str(float_amount)
-            t['json_original']['date'] = t['json_original']['date'].isoformat()
 
-            #t['account_iban'] = self.selected_account.iban
-            t['date_retreived'] = datetime.now().replace(microsecond=0)
+            # extract numbers only
+            t['json_original']['amount'] = str(
+                t['json_original']['amount'].amount)
 
-            #t['date'] = datetime.strptime(
-            #    t['json_original']['date'], '%Y-%m-%d').date()
-            #t['applicant_name'] = data['applicant_name']
-            #t['applicant_iban'] = data['applicant_iban']
-            #t['applicant_bin'] = data['applicant_bin']
-            #t['applicant_creditor_id'] = data.get('applicant_creditor_id', '')
-            #t['purpose'] = data['purpose']
-            #t['amount'] = float_amount
-            #t['currency'] = data['currency']
-            #t['customer_reference'] = data['customer_reference']
-            #t['end_to_end_reference'] = data.get('end_to_end_reference', '')
-
-            try:
-                hash_str = t['json_original']['date'] + str(float_amount)
-                hash_str += str(t['json_original'].get('transaction_code', ''))
-                hash_str += data['purpose'] + t['json_original']["id"]
-                hash_str += str(data['applicant_bin'] or '') + str(data['applicant_iban'] or '')
-                hash_str += str(data['applicant_name'] or '')
-                hash_str += str(data.get('end_to_end_reference', '') or '')
-            except TypeError as err:
-                print(err)
-                raise
-            hashvalue = hashlib.sha256(hash_str.encode('UTF-8')).hexdigest()
-            t["hash"] = hashvalue
+            # stringify date befor saving as json
+            for key, val in t['json_original'].items():
+                if isinstance(val, date):
+                    t['json_original'][key] = t['json_original'][key].isoformat()
 
             transformed.append(t)
         return transformed

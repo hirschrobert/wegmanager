@@ -3,7 +3,8 @@ import csv
 import sys
 import tempfile
 import time
-from datetime import datetime
+from datetime import date, datetime
+import hashlib
 
 from tkinter import simpledialog
 
@@ -13,11 +14,10 @@ from wegmanager.controller.abstract_controller import AbstractController
 from wegmanager.controller.accounts_controller import AccountsController
 from wegmanager.controller.fints import FinTS
 from wegmanager.view.transactions import Transactions
-from wegmanager.view.Accounts import Accounts
+from wegmanager.view.accounts import Accounts
 from wegmanager.model.transaction import Transaction as TransactionModel
 from wegmanager.model.transaction_audited import TransactionAudited
 from wegmanager.model.bank_user import BankUser
-from wegmanager.model import Base
 from argparse import ngettext
 
 from wegmanager.controller import db_session
@@ -82,6 +82,9 @@ class TransactionController(AbstractController):
         c_transactions = 0
         #c_transactions_audited = 0
         for t in data:
+
+            t['hash'] = self.build_hash(t)
+            t['date_retreived'] = datetime.now().replace(microsecond=0)
             t['bank_user_id'] = bank_user.id
             to_store = TransactionModel(**t)
             try:
@@ -94,19 +97,41 @@ class TransactionController(AbstractController):
                 print(_(f'Could not save to database: {err=}, {type(err)=}'))
             finally:
                 # get id to try to write to transactions audited at least
-                with db_session() as dtb:
-                    result = dtb.query(TransactionModel.id, TransactionModel.hash).filter(
-                        TransactionModel.hash == t['hash']).first()
-                transaction = TransactionModel()
-                transaction_id = result.id
-                self.copy_transactions(
-                    transaction_id, t, bank_user.iban, custom_fints)
+                try:
+                    with db_session() as dtb:
+                        result = dtb.query(TransactionModel.id, TransactionModel.hash).filter(
+                            TransactionModel.hash == t['hash']).first()
+                    transaction = TransactionModel()
+                    transaction_id = result.id
+                    self.copy_transactions(
+                        transaction_id, t, bank_user.iban, custom_fints)
+                except BaseException as err:
+                    print(
+                        _(f'Could not save transactions to mapped table: {err=}, {type(err)=}'))
 
         message = ngettext('{0} transaction inserted in database',
                            '{0} transactions inserted in database', c_transactions)
         print(message.format(c_transactions))
         self.refresh()
         return True
+
+    def build_hash(self, t):
+        try:
+            hash_str = t['json_original']['date'] + \
+                t['json_original']['amount']
+            hash_str += str(t['json_original'].get('transaction_code', ''))
+            hash_str += t['json_original']['purpose'] + \
+                (t['json_original']["id"] or '')
+            hash_str += str(t['json_original']['applicant_bin'] or '') + \
+                str(t['json_original']['applicant_iban'] or '')
+            hash_str += str(t['json_original']['applicant_name'] or '') + \
+                (t['json_original']["additional_purpose"] or '')
+            hash_str += str(t['json_original'].get('end_to_end_reference', '') or '')
+        except TypeError as err:
+            print(err)
+            raise
+        hashvalue = hashlib.sha256(hash_str.encode('UTF-8')).hexdigest()
+        return hashvalue
 
     def copy_transactions(self, transaction_id, data, iban, custom_fints):
         try:
@@ -124,9 +149,8 @@ class TransactionController(AbstractController):
                 audited['date'], '%Y-%m-%d').date()
             to_store = TransactionAudited(**audited)
             self.dtb.setData(to_store)
-        except BaseException as err:
-            print(
-                _(f'Could not save transactions to mapped table: {err=}, {type(err)=}'))
+        except:
+            raise
 
     def export(self):
         headers, content = self.getTableData()

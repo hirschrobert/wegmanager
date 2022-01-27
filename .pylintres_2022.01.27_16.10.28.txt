@@ -1,0 +1,271 @@
+************* Module wegmanager.controller.accounts_controller
+wegmanager/controller/accounts_controller.py:6:0: C0115: Missing class docstring (missing-class-docstring)
+************* Module wegmanager.controller.abstract_controller
+wegmanager/controller/abstract_controller.py:6:0: C0115: Missing class docstring (missing-class-docstring)
+wegmanager/controller/abstract_controller.py:6:0: R0903: Too few public methods (1/2) (too-few-public-methods)
+************* Module wegmanager.controller.db_controller
+wegmanager/controller/db_controller.py:159:0: W0622: Redefining built-in 'compile' (redefined-builtin)
+wegmanager/controller/db_controller.py:15:0: C0115: Missing class docstring (missing-class-docstring)
+wegmanager/controller/db_controller.py:38:8: W0621: Redefining name 'table' from outer scope (line 6) (redefined-outer-name)
+wegmanager/controller/db_controller.py:49:24: W1309: Using an f-string that does not have any interpolated variables (f-string-without-interpolation)
+wegmanager/controller/db_controller.py:51:4: R0201: Method could be a function (no-self-use)
+wegmanager/controller/db_controller.py:62:4: R0201: Method could be a function (no-self-use)
+wegmanager/controller/db_controller.py:69:4: C0103: Method name "getModeledData" doesn't conform to snake_case naming style (invalid-name)
+wegmanager/controller/db_controller.py:74:8: W0702: No exception type(s) specified (bare-except)
+wegmanager/controller/db_controller.py:78:4: C0103: Method name "modelData" doesn't conform to snake_case naming style (invalid-name)
+wegmanager/controller/db_controller.py:79:8: W0612: Unused variable 'results' (unused-variable)
+wegmanager/controller/db_controller.py:94:4: R0201: Method could be a function (no-self-use)
+wegmanager/controller/db_controller.py:100:31: W0622: Redefining built-in 'id' (redefined-builtin)
+wegmanager/controller/db_controller.py:100:31: C0103: Argument name "id" doesn't conform to snake_case naming style (invalid-name)
+wegmanager/controller/db_controller.py:100:4: R0201: Method could be a function (no-self-use)
+wegmanager/controller/db_controller.py:105:4: R0201: Method could be a function (no-self-use)
+wegmanager/controller/db_controller.py:115:16: W0622: Redefining built-in 'id' (redefined-builtin)
+wegmanager/controller/db_controller.py:110:4: C0103: Method name "setData" doesn't conform to snake_case naming style (invalid-name)
+wegmanager/controller/db_controller.py:117:8: W0706: The except handler raises immediately (try-except-raise)
+wegmanager/controller/db_controller.py:115:16: C0103: Variable name "id" doesn't conform to snake_case naming style (invalid-name)
+wegmanager/controller/db_controller.py:117:8: W0612: Unused variable 'err' (unused-variable)
+wegmanager/controller/db_controller.py:110:4: R0201: Method could be a function (no-self-use)
+wegmanager/controller/db_controller.py:137:8: C0103: Variable name "t" doesn't conform to snake_case naming style (invalid-name)
+wegmanager/controller/db_controller.py:139:12: C0103: Variable name "c" doesn't conform to snake_case naming style (invalid-name)
+wegmanager/controller/db_controller.py:140:12: W0212: Access to a protected member _make_proxy of a client class (protected-access)
+wegmanager/controller/db_controller.py:136:4: R0201: Method could be a function (no-self-use)
+wegmanager/controller/db_controller.py:147:0: C0115: Missing class docstring (missing-class-docstring)
+wegmanager/controller/db_controller.py:147:0: W0223: Method '_compile_w_cache' is abstract in class '_DDLCompiles' but is not overridden (abstract-method)
+wegmanager/controller/db_controller.py:147:0: R0901: Too many ancestors (15/7) (too-many-ancestors)
+wegmanager/controller/db_controller.py:153:0: C0115: Missing class docstring (missing-class-docstring)
+wegmanager/controller/db_controller.py:153:0: W0223: Method '_compile_w_cache' is abstract in class '_DDLCompiles' but is not overridden (abstract-method)
+wegmanager/controller/db_controller.py:153:0: R0901: Too many ancestors (15/7) (too-many-ancestors)
+wegmanager/controller/db_controller.py:159:21: W0621: Redefining name 'compiler' from outer scope (line 7) (redefined-outer-name)
+wegmanager/controller/db_controller.py:160:11: C0209: Formatting a regular string which could be a f-string (consider-using-f-string)
+wegmanager/controller/db_controller.py:159:0: W0613: Unused argument 'kw' (unused-argument)
+wegmanager/controller/db_controller.py:167:21: W0621: Redefining name 'compiler' from outer scope (line 7) (redefined-outer-name)
+wegmanager/controller/db_controller.py:167:0: E0102: function already defined line 159 (function-redefined)
+wegmanager/controller/db_controller.py:168:11: C0209: Formatting a regular string which could be a f-string (consider-using-f-string)
+wegmanager/controller/db_controller.py:167:21: W0613: Unused argument 'compiler' (unused-argument)
+wegmanager/controller/db_controller.py:167:0: W0613: Unused argument 'kw' (unused-argument)
+************* Module wegmanager.controller.fints
+wegmanager/controller/fints.py:184:0: C0301: Line too long (104/100) (line-too-long)
+wegmanager/controller/fints.py:187:0: C0301: Line too long (188/100) (line-too-long)
+wegmanager/controller/fints.py:188:0: C0301: Line too long (165/100) (line-too-long)
+wegmanager/controller/fints.py:30:8: R1705: Unnecessary "else" after "return" (no-else-return)
+wegmanager/controller/fints.py:32:16: C0103: Variable name "a" doesn't conform to snake_case naming style (invalid-name)
+wegmanager/controller/fints.py:51:8: C0103: Attribute name "f" doesn't conform to snake_case naming style (invalid-name)
+wegmanager/controller/fints.py:100:8: C0103: Attribute name "w3" doesn't conform to snake_case naming style (invalid-name)
+wegmanager/controller/fints.py:49:4: R0913: Too many arguments (6/5) (too-many-arguments)
+wegmanager/controller/fints.py:167:12: C0103: Variable name "t" doesn't conform to snake_case naming style (invalid-name)
+wegmanager/controller/fints.py:157:4: R0201: Method could be a function (no-self-use)
+wegmanager/controller/fints.py:182:4: R0201: Method could be a function (no-self-use)
+wegmanager/controller/fints.py:100:8: W0201: Attribute 'w3' defined outside __init__ (attribute-defined-outside-init)
+wegmanager/controller/fints.py:6:0: W0611: Unused pprint imported from pprint (unused-import)
+wegmanager/controller/fints.py:9:0: W0611: Unused datetime imported from datetime (unused-import)
+************* Module wegmanager.controller.InvoiceController
+wegmanager/controller/InvoiceController.py:1:0: C0103: Module name "InvoiceController" doesn't conform to snake_case naming style (invalid-name)
+wegmanager/controller/InvoiceController.py:5:0: C0115: Missing class docstring (missing-class-docstring)
+wegmanager/controller/InvoiceController.py:5:0: R0903: Too few public methods (1/2) (too-few-public-methods)
+************* Module wegmanager.controller.transaction_controller
+wegmanager/controller/transaction_controller.py:26:0: C0115: Missing class docstring (missing-class-docstring)
+wegmanager/controller/transaction_controller.py:40:4: C0103: Method name "getTableData" doesn't conform to snake_case naming style (invalid-name)
+wegmanager/controller/transaction_controller.py:49:8: W0622: Redefining built-in 'id' (redefined-builtin)
+wegmanager/controller/transaction_controller.py:48:31: C0103: Argument name "ac" doesn't conform to snake_case naming style (invalid-name)
+wegmanager/controller/transaction_controller.py:49:8: C0103: Variable name "id" doesn't conform to snake_case naming style (invalid-name)
+wegmanager/controller/transaction_controller.py:57:4: R0201: Method could be a function (no-self-use)
+wegmanager/controller/transaction_controller.py:84:12: C0103: Variable name "t" doesn't conform to snake_case naming style (invalid-name)
+wegmanager/controller/transaction_controller.py:93:19: W0703: Catching too general exception BaseException (broad-except)
+wegmanager/controller/transaction_controller.py:108:23: W0703: Catching too general exception BaseException (broad-except)
+wegmanager/controller/transaction_controller.py:104:20: W0612: Unused variable 'transaction' (unused-variable)
+wegmanager/controller/transaction_controller.py:118:25: C0103: Argument name "t" doesn't conform to snake_case naming style (invalid-name)
+wegmanager/controller/transaction_controller.py:118:4: R0201: Method could be a function (no-self-use)
+wegmanager/controller/transaction_controller.py:152:8: W0706: The except handler raises immediately (try-except-raise)
+wegmanager/controller/transaction_controller.py:136:54: W0613: Unused argument 'iban' (unused-argument)
+wegmanager/controller/transaction_controller.py:160:8: C0103: Variable name "fd" doesn't conform to snake_case naming style (invalid-name)
+wegmanager/controller/transaction_controller.py:162:62: C0103: Variable name "f" doesn't conform to snake_case naming style (invalid-name)
+wegmanager/controller/transaction_controller.py:178:12: C0103: Variable name "e" doesn't conform to snake_case naming style (invalid-name)
+wegmanager/controller/transaction_controller.py:156:8: W0612: Unused variable 'headers' (unused-variable)
+wegmanager/controller/transaction_controller.py:185:4: C0103: Method name "getAccounts" doesn't conform to snake_case naming style (invalid-name)
+wegmanager/controller/transaction_controller.py:186:8: C0103: Variable name "c" doesn't conform to snake_case naming style (invalid-name)
+wegmanager/controller/transaction_controller.py:187:8: C0103: Variable name "v" doesn't conform to snake_case naming style (invalid-name)
+wegmanager/controller/transaction_controller.py:6:0: W0611: Unused date imported from datetime (unused-import)
+wegmanager/controller/transaction_controller.py:21:0: C0411: standard import "from argparse import ngettext" should be placed before "from fints.models import SEPAAccount" (wrong-import-order)
+************* Module wegmanager.model.transaction
+wegmanager/model/transaction.py:7:0: C0115: Missing class docstring (missing-class-docstring)
+wegmanager/model/transaction.py:7:0: R0903: Too few public methods (0/2) (too-few-public-methods)
+************* Module wegmanager.model.business_partner
+wegmanager/model/business_partner.py:26:0: C0305: Trailing newlines (trailing-newlines)
+wegmanager/model/business_partner.py:8:0: C0115: Missing class docstring (missing-class-docstring)
+wegmanager/model/business_partner.py:8:0: R0903: Too few public methods (1/2) (too-few-public-methods)
+wegmanager/model/business_partner.py:1:0: W0611: Unused VARCHAR imported from sqlalchemy (unused-import)
+wegmanager/model/business_partner.py:2:0: W0611: Unused inspect imported from sqlalchemy.inspection (unused-import)
+wegmanager/model/business_partner.py:3:0: W0611: Unused relationship imported from sqlalchemy.orm (unused-import)
+************* Module wegmanager.model.invoice
+wegmanager/model/invoice.py:23:18: C0303: Trailing whitespace (trailing-whitespace)
+wegmanager/model/invoice.py:24:22: C0303: Trailing whitespace (trailing-whitespace)
+wegmanager/model/invoice.py:28:0: C0303: Trailing whitespace (trailing-whitespace)
+wegmanager/model/invoice.py:8:0: C0115: Missing class docstring (missing-class-docstring)
+wegmanager/model/invoice.py:30:4: W0211: Static method with 'self' as first argument (bad-staticmethod-argument)
+wegmanager/model/invoice.py:30:16: W0613: Unused argument 'self' (unused-argument)
+wegmanager/model/invoice.py:36:4: C0103: Method name "getModeledData" doesn't conform to snake_case naming style (invalid-name)
+wegmanager/model/invoice.py:38:18: E1120: No value for argument 'self' in staticmethod call (no-value-for-parameter)
+wegmanager/model/invoice.py:41:4: C0103: Method name "setData" doesn't conform to snake_case naming style (invalid-name)
+wegmanager/model/invoice.py:42:8: C0103: Variable name "db" doesn't conform to snake_case naming style (invalid-name)
+wegmanager/model/invoice.py:42:13: E0602: Undefined variable 'get_db' (undefined-variable)
+wegmanager/model/invoice.py:41:4: R0201: Method could be a function (no-self-use)
+wegmanager/model/invoice.py:47:4: C0103: Method name "modelData" doesn't conform to snake_case naming style (invalid-name)
+wegmanager/model/invoice.py:49:8: C0103: Variable name "db" doesn't conform to snake_case naming style (invalid-name)
+wegmanager/model/invoice.py:49:13: E0602: Undefined variable 'get_db' (undefined-variable)
+wegmanager/model/invoice.py:50:24: E0602: Undefined variable 'BankUser' (undefined-variable)
+wegmanager/model/invoice.py:47:4: R0201: Method could be a function (no-self-use)
+wegmanager/model/invoice.py:1:0: W0611: Unused VARCHAR imported from sqlalchemy (unused-import)
+wegmanager/model/invoice.py:3:0: W0611: Unused relationship imported from sqlalchemy.orm (unused-import)
+************* Module wegmanager.model.transaction_audited
+wegmanager/model/transaction_audited.py:33:0: C0301: Line too long (112/100) (line-too-long)
+wegmanager/model/transaction_audited.py:68:0: C0301: Line too long (139/100) (line-too-long)
+wegmanager/model/transaction_audited.py:70:0: C0305: Trailing newlines (trailing-newlines)
+wegmanager/model/transaction_audited.py:13:0: C0115: Missing class docstring (missing-class-docstring)
+wegmanager/model/transaction_audited.py:53:8: W0621: Redefining name 'table' from outer scope (line 6) (redefined-outer-name)
+wegmanager/model/transaction_audited.py:1:0: W0611: Unused inspect imported from sqlalchemy (unused-import)
+wegmanager/model/transaction_audited.py:4:0: W0611: Unused compiles imported from sqlalchemy.ext.compiler (unused-import)
+wegmanager/model/transaction_audited.py:5:0: W0611: Unused Executable imported from sqlalchemy.sql.expression (unused-import)
+wegmanager/model/transaction_audited.py:5:0: W0611: Unused ClauseElement imported from sqlalchemy.sql.expression (unused-import)
+wegmanager/model/transaction_audited.py:6:0: W0611: Unused table imported from sqlalchemy.sql (unused-import)
+************* Module wegmanager.model.bank_user
+wegmanager/model/bank_user.py:8:0: C0115: Missing class docstring (missing-class-docstring)
+************* Module wegmanager.model.bank
+wegmanager/model/bank.py:7:0: C0115: Missing class docstring (missing-class-docstring)
+wegmanager/model/bank.py:7:0: R0903: Too few public methods (0/2) (too-few-public-methods)
+************* Module wegmanager.view.widgets
+wegmanager/view/widgets.py:5:0: C0115: Missing class docstring (missing-class-docstring)
+wegmanager/view/widgets.py:6:4: R0913: Too many arguments (6/5) (too-many-arguments)
+wegmanager/view/widgets.py:29:23: W0613: Unused argument 'event' (unused-argument)
+************* Module wegmanager.view.accounts
+wegmanager/view/accounts.py:122:0: C0303: Trailing whitespace (trailing-whitespace)
+wegmanager/view/accounts.py:12:8: C0103: Attribute name "w1" doesn't conform to snake_case naming style (invalid-name)
+wegmanager/view/accounts.py:18:8: C0103: Attribute name "w2" doesn't conform to snake_case naming style (invalid-name)
+wegmanager/view/accounts.py:52:8: C0103: Attribute name "getPostingsButton" doesn't conform to snake_case naming style (invalid-name)
+wegmanager/view/accounts.py:57:8: C0103: Attribute name "addAccountButton" doesn't conform to snake_case naming style (invalid-name)
+wegmanager/view/accounts.py:9:0: C0115: Missing class docstring (missing-class-docstring)
+wegmanager/view/accounts.py:9:0: R0902: Too many instance attributes (9/7) (too-many-instance-attributes)
+wegmanager/view/accounts.py:22:4: C0103: Method name "createTableView" doesn't conform to snake_case naming style (invalid-name)
+wegmanager/view/accounts.py:39:15: C0209: Formatting a regular string which could be a f-string (consider-using-f-string)
+wegmanager/view/accounts.py:51:4: C0103: Method name "createButtonView" doesn't conform to snake_case naming style (invalid-name)
+wegmanager/view/accounts.py:62:4: C0103: Method name "createPopup" doesn't conform to snake_case naming style (invalid-name)
+wegmanager/view/accounts.py:68:4: C0103: Method name "disablePopup" doesn't conform to snake_case naming style (invalid-name)
+wegmanager/view/accounts.py:68:4: R0201: Method could be a function (no-self-use)
+wegmanager/view/accounts.py:73:4: C0103: Method name "openPopup" doesn't conform to snake_case naming style (invalid-name)
+wegmanager/view/accounts.py:73:24: C0103: Argument name "e" doesn't conform to snake_case naming style (invalid-name)
+wegmanager/view/accounts.py:81:8: R1705: Unnecessary "else" after "return" (no-else-return)
+wegmanager/view/accounts.py:96:4: C0103: Method name "showAccounts" doesn't conform to snake_case naming style (invalid-name)
+wegmanager/view/accounts.py:103:4: C0103: Method name "createAddView" doesn't conform to snake_case naming style (invalid-name)
+wegmanager/view/accounts.py:154:8: C0103: Variable name "addAccountDataButton" doesn't conform to snake_case naming style (invalid-name)
+wegmanager/view/accounts.py:167:4: C0103: Method name "destroyAddView" doesn't conform to snake_case naming style (invalid-name)
+************* Module wegmanager.view.AbstractTab
+wegmanager/view/AbstractTab.py:1:0: C0103: Module name "AbstractTab" doesn't conform to snake_case naming style (invalid-name)
+wegmanager/view/AbstractTab.py:5:0: C0115: Missing class docstring (missing-class-docstring)
+************* Module wegmanager.view.Invoices
+wegmanager/view/Invoices.py:1:0: C0103: Module name "Invoices" doesn't conform to snake_case naming style (invalid-name)
+wegmanager/view/Invoices.py:5:0: C0115: Missing class docstring (missing-class-docstring)
+wegmanager/view/Invoices.py:5:0: W0223: Method 'create_tab' is abstract in class 'AbstractTab' but is not overridden (abstract-method)
+wegmanager/view/Invoices.py:5:0: R0901: Too many ancestors (8/7) (too-many-ancestors)
+************* Module wegmanager.view.Form
+wegmanager/view/Form.py:1:0: C0103: Module name "Form" doesn't conform to snake_case naming style (invalid-name)
+wegmanager/view/Form.py:7:0: C0115: Missing class docstring (missing-class-docstring)
+wegmanager/view/Form.py:7:0: W0223: Method 'create_tab' is abstract in class 'AbstractTab' but is not overridden (abstract-method)
+wegmanager/view/Form.py:7:0: R0901: Too many ancestors (8/7) (too-many-ancestors)
+wegmanager/view/Form.py:52:4: R0913: Too many arguments (6/5) (too-many-arguments)
+wegmanager/view/Form.py:64:4: R0913: Too many arguments (6/5) (too-many-arguments)
+************* Module wegmanager.view.transactions
+wegmanager/view/transactions.py:63:8: C0103: Attribute name "getTransactions" doesn't conform to snake_case naming style (invalid-name)
+wegmanager/view/transactions.py:67:8: C0103: Attribute name "exportButton" doesn't conform to snake_case naming style (invalid-name)
+wegmanager/view/transactions.py:9:0: C0115: Missing class docstring (missing-class-docstring)
+wegmanager/view/transactions.py:9:0: W0223: Method 'create_tab' is abstract in class 'AbstractTab' but is not overridden (abstract-method)
+wegmanager/view/transactions.py:9:0: R0901: Too many ancestors (8/7) (too-many-ancestors)
+wegmanager/view/transactions.py:9:0: R0902: Too many instance attributes (8/7) (too-many-instance-attributes)
+wegmanager/view/transactions.py:40:15: C0209: Formatting a regular string which could be a f-string (consider-using-f-string)
+wegmanager/view/transactions.py:52:4: C0103: Method name "createButtonView" doesn't conform to snake_case naming style (invalid-name)
+wegmanager/view/transactions.py:71:4: C0103: Method name "createAddView" doesn't conform to snake_case naming style (invalid-name)
+wegmanager/view/transactions.py:72:8: C0103: Variable name "w1" doesn't conform to snake_case naming style (invalid-name)
+wegmanager/view/transactions.py:76:4: C0103: Method name "createChangeView" doesn't conform to snake_case naming style (invalid-name)
+wegmanager/view/transactions.py:77:8: C0103: Variable name "w1" doesn't conform to snake_case naming style (invalid-name)
+wegmanager/view/transactions.py:90:0: W1404: Implicit string concatenation found in list (implicit-str-concat)
+wegmanager/view/transactions.py:97:4: C0103: Method name "createPopup" doesn't conform to snake_case naming style (invalid-name)
+wegmanager/view/transactions.py:104:4: C0103: Method name "disablePopup" doesn't conform to snake_case naming style (invalid-name)
+wegmanager/view/transactions.py:104:4: R0201: Method could be a function (no-self-use)
+wegmanager/view/transactions.py:109:4: C0103: Method name "openPopup" doesn't conform to snake_case naming style (invalid-name)
+wegmanager/view/transactions.py:109:24: C0103: Argument name "e" doesn't conform to snake_case naming style (invalid-name)
+wegmanager/view/transactions.py:27:8: W0201: Attribute 'table' defined outside __init__ (attribute-defined-outside-init)
+wegmanager/view/transactions.py:82:8: W0201: Attribute 'neighbourhoods' defined outside __init__ (attribute-defined-outside-init)
+wegmanager/view/transactions.py:89:8: W0201: Attribute 'room_types' defined outside __init__ (attribute-defined-outside-init)
+wegmanager/view/transactions.py:94:8: W0201: Attribute 'view' defined outside __init__ (attribute-defined-outside-init)
+wegmanager/view/transactions.py:1:0: R0801: Similar lines in 2 files
+==wegmanager.view.accounts:[64:80]
+==wegmanager.view.transactions:[100:116]
+        self.popup.add_separator()
+        self.popup.add_command(label=_("delete"), command=self.delete)
+
+    def disablePopup(self, menu):
+        for index in range(menu.index('end') + 1):
+            if "state" in menu.entryconfigure(index):
+                menu.entryconfigure(index, state="disabled")
+
+    def openPopup(self, e):
+        self.popup.tk_popup(e.x_root, e.y_root)
+
+    def selection(self):
+        results = []
+        for item in self.table.selection():
+            values = self.table.item(item, "values")
+            results.append(values) (duplicate-code)
+wegmanager/view/transactions.py:1:0: R0801: Similar lines in 2 files
+==wegmanager.view.accounts:[36:51]
+==wegmanager.view.transactions:[37:53]
+        displaycolumns = []
+        for col in self.table["columns"]:
+            if "%s" % col in headers.keys():
+                displaycolumns.append(col)
+        self.table["displaycolumns"] = displaycolumns
+
+        for key, value in headers.items():
+            self.table.heading(key, text=value)
+        if not content[0]:
+            self.disablePopup(self.popup)
+        else:
+            for row in content:
+                self.table.insert("", tk.END, values=list(row.values()))
+
+    def createButtonView(self):
+ (duplicate-code)
+wegmanager/view/transactions.py:1:0: R0801: Similar lines in 2 files
+==wegmanager.view.accounts:[85:95]
+==wegmanager.view.transactions:[118:127]
+    def change(self):
+        items = self.selection()
+        for i in items:
+            print(i[0] + "changed")
+
+    def delete(self):
+        items = self.selection()
+        for i in items:
+            print(i[0] + "deleted") (duplicate-code)
+wegmanager/view/transactions.py:1:0: R0801: Similar lines in 2 files
+==wegmanager.view.Invoices:[5:13]
+==wegmanager.view.transactions:[9:17]
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.parent = parent  # notebook
+        self.grid_rowconfigure(0, weight=1)
+        self.grid_rowconfigure(1, weight=2)
+        self.grid_columnconfigure(0, weight=1)
+        # self is Transactions, which is an AbstractTab which is a Frame
+        self.grid(row=0, column=0, sticky=tk.N + tk.S + tk.E + tk.W) (duplicate-code)
+wegmanager/view/transactions.py:1:0: R0801: Similar lines in 2 files
+==wegmanager.view.accounts:[26:32]
+==wegmanager.view.transactions:[21:27]
+        headers, content = data
+        if content[0]:
+            tableheaders = list(content[0].keys())
+        else:
+            tableheaders = list(headers.keys())
+        self.table = ttk.Treeview( (duplicate-code)
+
+------------------------------------------------------------------
+Your code has been rated at 7.72/10 (previous run: 7.72/10, +0.00)
+

@@ -1,4 +1,4 @@
-from sqlalchemy import Column, String, Integer, ForeignKey, Table, select
+from sqlalchemy import Column, String, Integer, ForeignKey, select
 from sqlalchemy.orm import relationship
 
 from wegmanager.model import Base
@@ -10,6 +10,7 @@ class BankUser(Base):
     id = Column(Integer, primary_key=True)
     blz = Column(Integer())
     username = Column(String(25))
+    customername = Column(String(25))
     pin = Column(String(25))
     iban = Column(String(34))
 
