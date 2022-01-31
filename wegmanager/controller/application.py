@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 # pylint: disable=missing-module-docstring
 import os
 import gettext
@@ -6,12 +8,10 @@ from configparser import ConfigParser
 from tkinter import ttk
 import tkinter as tk
 
-import pkg_resources
-
 from wegmanager.view.transactions import Transactions
-from wegmanager.view.Invoices import Invoices
+from wegmanager.view.invoices import Invoices
 from wegmanager.controller.transaction_controller import TransactionController
-from wegmanager.controller.InvoiceController import InvoiceController
+from wegmanager.controller.invoice_controller import InvoiceController
 from wegmanager.controller.db_controller import Dtb
 
 
@@ -21,7 +21,7 @@ class Application(ttk.Notebook):  # pylint: disable=too-many-ancestors
     It inherits from ttk.Notebook and starts the individual tabs.
      '''
 
-    def __init__(self, parent=None):
+    def __init__(self, parent=None, app_path=None):
         super().__init__(parent)
         self.parent = parent  # window
         self.parent.group(parent)
@@ -30,8 +30,9 @@ class Application(ttk.Notebook):  # pylint: disable=too-many-ancestors
         self.grid_rowconfigure(0, weight=1)
         self.grid_columnconfigure(0, weight=1)
 
+        self.app_path = app_path
         self.config = self.create_config()
-        self.i18n()
+        self.i18n(self.app_path)
 
         self.dtb = Dtb(self.get_db_path())
 
@@ -62,10 +63,10 @@ class Application(ttk.Notebook):  # pylint: disable=too-many-ancestors
     @staticmethod
     def get_home_path():
         '''
-        Get $(HOME) Path of user. Currently linux only.
+        Get $(HOME) Path of user. Should work for Linux and Windows.
         '''
 
-        home_folder = os.getenv('HOME')
+        home_folder = os.path.expanduser("~")
         return home_folder
 
     def create_config(self):
@@ -99,7 +100,7 @@ class Application(ttk.Notebook):  # pylint: disable=too-many-ancestors
                 config_object.write(conf)
         return config_object
 
-    def i18n(self):
+    def i18n(self, app_path):
         '''
         Setup gettext translation
         '''
@@ -110,8 +111,7 @@ class Application(ttk.Notebook):  # pylint: disable=too-many-ancestors
         # msgfmt locale/de/LC_MESSAGES/messages.po -o locale/de/LC_MESSAGES/messages.mo
         # localepath = pkg_resources.resource_filename('wegmanager', 'locale')
         try:
-            localepath = pkg_resources.resource_filename(
-                'wegmanager', 'locale')
+            localepath = os.path.join(app_path, 'locale')
             i18n = gettext.translation(
                 'messages', localepath, [self.config['SETUP']['language']])
             i18n.install()

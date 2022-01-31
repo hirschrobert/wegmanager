@@ -24,7 +24,7 @@ class Dtb:
         '''
 
         conn_str = ''.join(['sqlite:///', path])
-        self.engine = create_engine(conn_str)
+        self.engine = create_engine(conn_str, echo=True)
         db_session.configure(bind=self.engine)
 
         # init views

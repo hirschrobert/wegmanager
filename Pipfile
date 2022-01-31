@@ -17,6 +17,11 @@ pyinstaller = "*"
 stdeb = "*"
 pip-tools = "*"
 virtualenv = "*"
+faker = "*"
+sqlalchemy-schemadisplay = {path = "./tests/vendor/sqlalchemy_schemadisplay-master"}
+graphviz = "*"
+pygraphviz = "*"
+eralchemy = "*"
 
 [requires]
 python_version = "3.8"

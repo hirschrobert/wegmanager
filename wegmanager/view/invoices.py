@@ -11,3 +11,9 @@ class Invoices(AbstractTab):
         self.grid_columnconfigure(0, weight=1)
         # self is Transactions, which is an AbstractTab which is a Frame
         self.grid(row=0, column=0, sticky=tk.N + tk.S + tk.E + tk.W)
+        self.create_button()
+
+    def create_button(self):
+        self.exportButton = tk.Button(self)
+        self.exportButton["text"] = _("export")
+        self.exportButton.grid(column=0, row=0, sticky=tk.W)

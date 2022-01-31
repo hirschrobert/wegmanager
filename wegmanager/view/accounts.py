@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import tkinter as tk
 from tkinter import ttk
 from typing import List
@@ -111,6 +112,7 @@ class Accounts:
 
         self.inputs["iban"] = ttk.Entry(self.w2)
         self.inputs["iban"].grid(column=1, row=0, sticky=tk.E, padx=5, pady=5)
+        self.inputs["iban"].focus()
 
         # username
         username_label = ttk.Label(self.w2, text=_("Username") + ":")
@@ -119,7 +121,7 @@ class Accounts:
         self.inputs["username"] = ttk.Entry(self.w2)
         self.inputs["username"].grid(
             column=1, row=1, sticky=tk.E, padx=5, pady=5)
-        
+
         # customername
         customername_label = ttk.Label(self.w2, text=_("Customer ID") + ":")
         customername_label.grid(column=0, row=2, sticky=tk.W, padx=5, pady=5)

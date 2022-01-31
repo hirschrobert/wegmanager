@@ -1,6 +1,9 @@
+# -*- coding: utf-8 -*-
 from tkinter import messagebox
+from wegmanager import DEBUG
 from wegmanager.model.bank_user import BankUser
 from wegmanager.model.bank import Bank
+from wegmanager.controller.util import validated_iban
 
 
 class AccountsController():
@@ -59,26 +62,55 @@ class AccountsController():
             self.view.destroyAddView()
 
     def validate_entries(self, entries):
-        isvalid = True
+        if DEBUG:
+            return True
+
+        is_valid = True
+        messages = {}
         for key, item in entries.items():
             # case (blz < 10000000 && > 99999999)
             if key == "blz":
-                try:
-                    value = int(item.get())
-                    if (value < 10000000 or value > 99999999):
-                        raise ValueError
-                    self.entries_values[key] = value
-                except ValueError:
-                    isvalid = False
+                tmp = item.get()
+                if not tmp:
+                    tmp = '0'
+                value = int((tmp).replace(" ", ""))
+                if (value < 10000000 or value > 99999999):
                     self.entries_values[key] = None
-                    messagebox.showerror(
-                        title="Validation error",
-                        message=_(f"{key}: must be eight digits")
-                    )
+                    is_valid = False
+                    messages[key] = _("BLZ: Must be eight digits.")
+                else:
+                    self.entries_values[key] = value
+            # value doesn't come from input and must not be empty.
             elif key == 'bank_id':
-                self.entries_values[key] = item
+                if not item:
+                    self.entries_values[key] = None
+                    is_valid = False
+                    messages[key] = _("Bank: Please select a bank.")
+                else:
+                    self.entries_values[key] = item
+            # get rid of spaces
+            elif key == 'iban':
+                value = item.get().replace(" ", "")
+                # !A AND B <==> B (inhibition)
+                if not validated_iban(value, entries['blz'].get()):
+                    self.entries_values[key] = None
+                    is_valid = False
+                    messages[key] = _("IBAN: Not a valid IBAN.")
+                self.entries_values[key] = value
+                # TODO: Validate IBAN
             else:
                 value = item.get()
                 self.entries_values[key] = value
+        try:
+            if not is_valid:
+                raise ValueError
+        except ValueError:
+            message = ""
+            for key in messages:
+                message += messages[key] + "\n"
+            messagebox.showerror(
+                title=_("Validation Error"),
+                message=message
+            )
 
-        return isvalid
+        return is_valid

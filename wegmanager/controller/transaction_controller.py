@@ -3,7 +3,7 @@ import csv
 import sys
 import tempfile
 import time
-from datetime import date, datetime
+from datetime import datetime
 import hashlib
 
 from tkinter import simpledialog
