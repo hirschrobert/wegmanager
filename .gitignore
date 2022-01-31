@@ -5,6 +5,7 @@ data/db.sqlite
 data/config.ini
 data/tmp/*
 tests/*
+!tests/vendor/
 locale-dev
 requirements.in
 
