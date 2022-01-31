@@ -27,7 +27,7 @@ jobs:
     - name: Install Python depenencies
       id: python-dependencies
       run: |
-        sudo apt-get install -y libjpeg-dev libtiff5-dev libjpeg8-dev libopenjp2-7-dev zlib1g-dev libfreetype6-dev liblcms2-dev libwebp-dev tcl8.6-dev tk8.6-dev python3-tk libharfbuzz-dev libfribidi-dev libxcb1-dev
+        sudo apt-get install -y libjpeg-dev libtiff5-dev libjpeg8-dev libopenjp2-7-dev zlib1g-dev libfreetype6-dev liblcms2-dev libwebp-dev tcl8.6-dev tk8.6-dev python3-tk libharfbuzz-dev libfribidi-dev libxcb1-dev libgraphviz-dev graphviz
         python -m pip install --upgrade pip
         python -m pip install --user pipenv
     - name: Install dependencies from project Pipfile
