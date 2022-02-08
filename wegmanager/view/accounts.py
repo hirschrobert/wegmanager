@@ -150,7 +150,7 @@ class Accounts:
 
         self.inputs["bank_id"] = None
         self.cmb = Combobox(frame=self.w2, values=values, row=5,
-                            column=1, callback=self.inputs)
+                            column=1, callback=self.inputs["bank_id"])
 
         # add account button
         addAccountDataButton = ttk.Button(self.w2, text=_(

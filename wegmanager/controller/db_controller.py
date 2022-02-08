@@ -5,6 +5,7 @@ from sqlalchemy import create_engine, Table, exc, event, inspect
 from sqlalchemy.schema import DDLElement
 from sqlalchemy.sql import table
 from sqlalchemy.ext import compiler
+from sqlalchemy.engine import Engine
 
 from wegmanager.model import Base
 from wegmanager.model.transaction_audited import TransactionAudited
@@ -33,6 +34,13 @@ class Dtb:
 
         Base.metadata.create_all(  # @UndefinedVariable
             bind=self.engine, checkfirst=True)
+
+    @event.listens_for(Engine, "connect")
+    def set_sqlite_pragma(dbapi_connection, connection_record):
+        cursor = dbapi_connection.cursor()
+        cursor.execute("PRAGMA journal_mode=WAL")
+        cursor.close()
+
 
     def check_bank_attributes(self):
         table = Table('banks', Base.metadata, autoload_with=self.engine)

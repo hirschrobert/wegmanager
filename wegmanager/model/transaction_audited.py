@@ -1,11 +1,9 @@
 from sqlalchemy import (ForeignKey, Column, String,
-                        Integer, DATE, NVARCHAR, Float, CHAR, select, inspect)
+                        Integer, DATE, NVARCHAR, Float, CHAR, select)
 from sqlalchemy.orm import relationship
-from sqlalchemy.ext.compiler import compiles
-from sqlalchemy.sql.expression import Executable, ClauseElement
-from sqlalchemy.sql import table
 
 from wegmanager.model import Base
+
 from wegmanager.model.transaction import Transaction
 from wegmanager.model.bank_user import BankUser
 
@@ -13,7 +11,8 @@ from wegmanager.model.bank_user import BankUser
 class TransactionAudited(Base):
     __tablename__ = "transactions_audited"
     id = Column(Integer, primary_key=True)
-    #account_iban = Column(String(34))
+    bookings = relationship(
+        "Booking", back_populates="transaction_audited")
     date = Column(DATE)
     applicant_name = Column(String(50))
     applicant_iban = Column(String(34))
@@ -31,6 +30,10 @@ class TransactionAudited(Base):
     # many-to-one side remains, see tip below
     transaction = relationship(
         "Transaction", back_populates="transaction_audited", foreign_keys='[TransactionAudited.transaction_id]')
+
+    def __init__(self, applicant_name=None, amount=None):
+        self.applicant_name = applicant_name
+        self.amount = amount
 
     @staticmethod
     def headers():
@@ -67,4 +70,3 @@ class TransactionAudited(Base):
             table.c.end_to_end_reference.label("end_to_end_reference"),
         ]).select_from(table.join(transacton_table).join(bank_users_table)).where(bank_users_table.c.id == transacton_table.c.bank_user_id)
         return selectable
-

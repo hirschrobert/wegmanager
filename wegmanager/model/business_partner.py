@@ -1,7 +1,6 @@
 from sqlalchemy import (Column, Integer, VARCHAR, NVARCHAR, DATETIME,
-                        Float, String, JSON, BOOLEAN)
+                        Float, String, JSON, BOOLEAN, ForeignKey)
 from sqlalchemy.orm import relationship
-from sqlalchemy.ext.hybrid import hybrid_property
 
 from wegmanager.model import Base
 
@@ -19,14 +18,12 @@ class BusinessPartner(Base):
     is_client = Column(BOOLEAN)
     email = Column(String(50))
 
-    debitors = relationship(
-        "Invoice", foreign_keys="Invoice.debitor_id", backref="debitor")
-    creditors = relationship(
-        "Invoice", foreign_keys="Invoice.creditor_id", backref="creditor")
+    housing_account_id = Column(Integer, ForeignKey(
+        'housing_accounts.id'), unique=True)
 
-    @hybrid_property
-    def invoices(self):
-        return self.debitors.union(self.creditors)
+    # many-to-one side remains, see tip below
+    housing_account = relationship(
+        "HousingAccount", back_populates="business_partner")
 
     def __init__(self, name=None):
         self.name = name

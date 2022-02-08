@@ -7,11 +7,14 @@ from configparser import ConfigParser
 
 from tkinter import ttk
 import tkinter as tk
+import locale
 
 from wegmanager.view.transactions import Transactions
 from wegmanager.view.invoices import Invoices
+from wegmanager.view.reports import Reports
 from wegmanager.controller.transaction_controller import TransactionController
 from wegmanager.controller.invoice_controller import InvoiceController
+from wegmanager.controller.report_controller import ReportController
 from wegmanager.controller.db_controller import Dtb
 
 
@@ -25,12 +28,12 @@ class Application(ttk.Notebook):  # pylint: disable=too-many-ancestors
         super().__init__(parent)
         self.parent = parent  # window
         self.parent.group(parent)
-        self.grid(row=0, column=0, sticky=tk.N + tk.S +
-                  tk.E + tk.W)  # self is ttk.Notebook
         self.grid_rowconfigure(0, weight=1)
         self.grid_columnconfigure(0, weight=1)
-
+        self.grid(row=0, column=0, sticky=tk.N + tk.S +
+                  tk.E + tk.W)  # self is ttk.Notebook
         self.app_path = app_path
+        self.home_path = self.get_home_path()
         self.config = self.create_config()
         self.i18n(self.app_path)
 
@@ -39,7 +42,9 @@ class Application(ttk.Notebook):  # pylint: disable=too-many-ancestors
         self.new_tab(view=Transactions, controller=TransactionController(
             self.dtb), name=_("Bank Transactions"))
         self.new_tab(view=Invoices, controller=InvoiceController(
-            self.dtb), name=_("Invoices"))
+            self.dtb, self.home_path, self.config), name=_("Invoices"))
+        self.new_tab(view=Reports, controller=ReportController(
+            self.dtb, self.config), name=_("Reports"))
         self.mainloop()
 
     def get_db_path(self):
@@ -76,9 +81,7 @@ class Application(ttk.Notebook):  # pylint: disable=too-many-ancestors
 
         config_object = ConfigParser()
 
-        # might not work with Win and/or Mac
-        home_folder = self.get_home_path()
-        config_path = os.path.join(home_folder, '.config', 'wegmanager')
+        config_path = os.path.join(self.home_path, '.config', 'wegmanager')
         if not os.path.exists(config_path):
             os.makedirs(config_path)
 
@@ -88,7 +91,9 @@ class Application(ttk.Notebook):  # pylint: disable=too-many-ancestors
         else:
 
             config_object["SETUP"] = {
-                "language": "de",
+                "language": "de_DE",
+                "currency": "EUR",
+                "files_location": "/var/opt/wegmanager/files"
             }
 
             config_object["SQLITE"] = {
@@ -107,13 +112,15 @@ class Application(ttk.Notebook):  # pylint: disable=too-many-ancestors
 
         # find . -type f \( -name '*.py' \) -print > locale/filelist # inside main project folder
         # xgettext --files-from=locale/filelist --from-code=utf-8 -p locale/
-        # msginit -i locale/messages.pot --locale=de_DE.utf-8 -o locale/de/LC_MESSAGES/messages.po
-        # msgfmt locale/de/LC_MESSAGES/messages.po -o locale/de/LC_MESSAGES/messages.mo
+        # msginit -i locale/messages.pot --locale=de_DE.utf-8 -o locale/de_DE/LC_MESSAGES/messages.po
+        # msgfmt locale/de_DE/LC_MESSAGES/messages.po -o locale/de_DE/LC_MESSAGES/messages.mo
         # localepath = pkg_resources.resource_filename('wegmanager', 'locale')
         try:
             localepath = os.path.join(app_path, 'locale')
             i18n = gettext.translation(
                 'messages', localepath, [self.config['SETUP']['language']])
+            locale.setlocale(
+                locale.LC_ALL, self.config['SETUP']['language'] + ".utf-8")
             i18n.install()
         except FileNotFoundError as err:
             print(f"Files for translation not found: {err.filename}!")

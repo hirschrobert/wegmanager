@@ -7,6 +7,7 @@ name = "pypi"
 sqlalchemy = "1.4.29"
 fints = "3.0.1"
 Pillow = "9.0.0"
+tkcalendar = "1.6.1"
 
 [dev-packages]
 pylint = "*"
