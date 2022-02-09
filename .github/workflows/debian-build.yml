@@ -35,9 +35,9 @@ jobs:
     - name: Fixing pip issues
       id: pip-issues
       run: |
-        curl -sS https://bootstrap.pypa.io/get-pip.py
-        pipenv run python3.10 get-pip.py
-        #pipenv run curl -sS https://bootstrap.pypa.io/get-pip.py | python3.10
+        #curl -sS https://bootstrap.pypa.io/get-pip.py
+        #pipenv run python3.10 get-pip.py
+        pipenv run curl -sS https://bootstrap.pypa.io/get-pip.py | python3.10
         #pip download pip==22.0.3
         #sudo cp pip-22.0.3-py3-none-any.whl /usr/share/python-wheels/    
     - name: Install dependencies from project Pipfile
