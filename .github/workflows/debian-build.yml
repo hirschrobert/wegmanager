@@ -23,7 +23,7 @@ jobs:
       id: ubuntu-dependencies
       run: |
         sudo add-apt-repository ppa:jyrki-pulliainen/dh-virtualenv
-        sudo add-apt-repository add-apt-repository ppa:deadsnakes/ppa
+        sudo add-apt-repository ppa:deadsnakes/ppa
         sudo apt-get install -y devscripts dh-virtualenv debhelper build-essential python3-virtualenv python3.10
     - name: Install Python depenencies
       id: python-dependencies
