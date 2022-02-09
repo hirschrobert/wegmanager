@@ -32,6 +32,12 @@ jobs:
         #python3.10 -m pip install --upgrade pip
         curl -sS https://bootstrap.pypa.io/get-pip.py | python3.10
         python3.10 -m pip install --user pipenv
+    - name: Fixing pip issues
+      id: pip-issues
+      run: |
+        python3.10 -m virtualenv test
+        python3.10 -m virtualenv --upgrade-embed-wheels
+        sudo cp .local/share/virtualenv/wheel/house/pip-22.0.3-py3-none-any.whl /usr/share/python-wheels/    
     - name: Install dependencies from project Pipfile
       id: project-dependencies
       run: pipenv install --dev
