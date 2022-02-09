@@ -35,7 +35,7 @@ jobs:
     - name: Fixing pip issues
       id: pip-issues
       run: |
-        python3.10 -m virtualenv --upgrade-embed-wheels
+        python3.10 -m virtualenv test --upgrade-embed-wheels
         sudo cp .local/share/virtualenv/wheel/house/pip-22.0.3-py3-none-any.whl /usr/share/python-wheels/    
     - name: Install dependencies from project Pipfile
       id: project-dependencies
