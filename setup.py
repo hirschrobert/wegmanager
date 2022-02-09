@@ -1,13 +1,13 @@
 from setuptools import setup, find_packages
 
 
-VERSION = '0.0.dev1'
+VERSION = '0.0.dev2'
 
 install_requires = [
     'sqlalchemy == 1.4.29',
     'fints == 3.0.1',
     'Pillow == 9.0.0',
-    'tkcalendar = 1.6.1',
+    'tkcalendar == 1.6.1',
 ]
 
 docs_extras = [
