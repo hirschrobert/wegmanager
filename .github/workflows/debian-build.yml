@@ -35,7 +35,8 @@ jobs:
     - name: Fixing pip issues
       id: pip-issues
       run: |
-        pipenv run pip --version
+        pipenv shell
+        curl -sS https://bootstrap.pypa.io/get-pip.py | python3.10
         #pipenv run curl -sS https://bootstrap.pypa.io/get-pip.py | python3.10
         #pip download pip==22.0.3
         #sudo cp pip-22.0.3-py3-none-any.whl /usr/share/python-wheels/    
