@@ -22,13 +22,7 @@ class Invoices(AbstractTab):
         self.booking_frame = None
         self.invoice_frame = None
         self.callbacks = {}
-        self.create_buttons()
         self.cents = Decimal('.01')
-
-    def create_buttons(self):
-        self.exportButton = tk.Button(self)
-        self.exportButton["text"] = _("export")
-        self.exportButton.grid(row=1, column=0, sticky=tk.W)
 
     def create_invoice_form(self, home_path):
         self.home_path = home_path

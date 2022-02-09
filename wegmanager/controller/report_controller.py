@@ -1,5 +1,7 @@
 from wegmanager.controller.abstract_controller import AbstractController
 from wegmanager.view.invoices import Invoices
+from wegmanager.model.business_partner import BusinessPartner
+from wegmanager.model.building import Building
 
 
 class ReportController(AbstractController):
@@ -14,7 +16,7 @@ class ReportController(AbstractController):
         self.view = view  # notebook
         self.view.exportButton.configure(command=self.export)
 
-    def export(self):
+    def export(self, typed):
         print('Hello World')
         with db_session() as dtb:
             results = dtb.query(Building)
@@ -29,5 +31,3 @@ class ReportController(AbstractController):
                     f'%{typed}%')
             )
         return results
-    
-    

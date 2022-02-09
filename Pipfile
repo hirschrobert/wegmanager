@@ -4,25 +4,20 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-sqlalchemy = "1.4.29"
-fints = "3.0.1"
-Pillow = "9.0.0"
-tkcalendar = "1.6.1"
+sqlalchemy = "*"
+Pillow = "*"
+tkcalendar = "*"
+fints = {ref = "846c25f5f6ae578cde5151fc30b5f7a3601a95ac", git = "git://github.com/raphaelm/python-fints.git"}
 
 [dev-packages]
 pylint = "*"
 sphinx = "*"
 sphinx-intl = "*"
 sphinx-rtd-theme = "*"
-pyinstaller = "*"
-stdeb = "*"
 pip-tools = "*"
 virtualenv = "*"
 faker = "*"
 sqlalchemy-schemadisplay = {path = "./tests/vendor/sqlalchemy_schemadisplay-master"}
-graphviz = "*"
-pygraphviz = "*"
-eralchemy = "*"
 
 [requires]
-python_version = "3.8"
+python_version = "3.10"
