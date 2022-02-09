@@ -32,8 +32,12 @@ jobs:
         curl https://raw.githubusercontent.com/pypa/pipenv/master/get-pipenv.py | python3.10
     - name: Install dependencies from project Pipfile
       id: project-dependencies
-      run: pipenv install --dev
+      run: |
+        pipenv --python 3.10
+        pipenv install --dev
     - name: pylint
       run: pipenv run pylint ./wegmanager/  
     - name: Run build in pipenv
-      run: PIPENV_DOTENV_LOCATION=build.env pipenv run debuild -b -us -uc
+      run: |
+        echo "DEB_BUILD_OPTIONS=nostrip" > build.env
+        PIPENV_DOTENV_LOCATION=build.env pipenv run debuild -b -us -uc
