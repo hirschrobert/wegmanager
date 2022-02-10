@@ -29,7 +29,12 @@ jobs:
       id: python-dependencies
       run: |
         sudo apt-get install -y libjpeg-dev libtiff5-dev libjpeg8-dev libopenjp2-7-dev zlib1g-dev libfreetype6-dev liblcms2-dev libwebp-dev tcl8.6-dev tk8.6-dev libharfbuzz-dev libfribidi-dev libxcb1-dev libgraphviz-dev graphviz
-        curl https://raw.githubusercontent.com/pypa/pipenv/master/get-pipenv.py | python3.10
+        cd /usr/bin/
+        sudo rm python3
+        sudo ln -s python3.10 python3
+        sudo ln -s python3.10 python
+        python --version
+        curl https://raw.githubusercontent.com/pypa/pipenv/master/get-pipenv.py | python
     - name: Install dependencies from project Pipfile
       id: project-dependencies
       run: |
