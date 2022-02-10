@@ -31,6 +31,7 @@ jobs:
         sudo apt-get install -y libjpeg-dev libtiff5-dev libjpeg8-dev libopenjp2-7-dev zlib1g-dev libfreetype6-dev liblcms2-dev libwebp-dev tcl8.6-dev tk8.6-dev libharfbuzz-dev libfribidi-dev libxcb1-dev libgraphviz-dev graphviz
         cd /usr/bin/
         sudo rm python3
+        sudo rm python
         sudo ln -s python3.10 python3
         sudo ln -s python3.10 python
         python --version
