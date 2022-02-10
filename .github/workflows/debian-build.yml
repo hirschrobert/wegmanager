@@ -34,7 +34,7 @@ jobs:
         sudo rm python
         sudo ln -s python3.10 python3
         sudo ln -s python3.10 python
-        python --version
+        echo "default-version = python3.10" > /usr/share/python3/debian_defaults
         curl https://raw.githubusercontent.com/pypa/pipenv/master/get-pipenv.py | python
     - name: Install dependencies from project Pipfile
       id: project-dependencies
