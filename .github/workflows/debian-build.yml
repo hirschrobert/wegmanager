@@ -34,7 +34,7 @@ jobs:
         sudo rm python
         sudo ln -s python3.10 python3
         sudo ln -s python3.10 python
-        echo -e "default-version = python3.10\nsupported-versions = python3.10\nold-versions = python3.1, python3.2, python3.3, python3.4, python3.5, python3.6, python3.7, python3.8\nunsupported-versions = python3.1, python3.2, python3.3, python3.4, python3.5, python3.6, python3.7, python3.8" > /usr/share/python3/debian_defaults
+        echo -e "[DEFAULT]\ndefault-version = python3.10\nsupported-versions = python3.10\nold-versions = python3.1, python3.2, python3.3, python3.4, python3.5, python3.6, python3.7, python3.8\nunsupported-versions = python3.1, python3.2, python3.3, python3.4, python3.5, python3.6, python3.7, python3.8" > /usr/share/python3/debian_defaults
         curl https://raw.githubusercontent.com/pypa/pipenv/master/get-pipenv.py | python
     - name: Install dependencies from project Pipfile
       id: project-dependencies
